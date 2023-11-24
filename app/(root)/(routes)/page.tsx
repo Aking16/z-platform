@@ -17,6 +17,7 @@ import {
 
 import { LoginForm } from '@/components/forms/login-form';
 import { SignUpForm } from '@/components/forms/signUp-form';
+import prismadb from '@/lib/prismadb';
 
 const RootPage = () => {
   const session = useSession();
@@ -24,9 +25,10 @@ const RootPage = () => {
 
   useEffect(() => {
     if (session?.status === "authenticated") {
-      router.push('/home')
+      router.push('/home')      
     }
   }, [session?.status, router])
+
 
   return (
     <div className="">

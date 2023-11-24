@@ -65,7 +65,7 @@ export function SignUpForm() {
                     loading
                 </div>
                 :
-                <form onSubmit={form.handleSubmit(onSubmit)} className="px-[5rem] h-[31.5rem]">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="px-[5rem]">
                     <h2 className="text-3xl font-bold mt-2">
                         Create your account
                     </h2>

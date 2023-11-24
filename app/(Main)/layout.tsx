@@ -1,13 +1,14 @@
 "use client"
 
+import FollowBar from "@/components/follow-bar";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Input } from "@/components/ui/input";
 import { Home, Mail, Search, User2 } from "lucide-react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 
-export default function layout({ children } : {children: React.ReactNode}) {
+export default function layout({ children }: { children: React.ReactNode }) {
   return (
     <Container>
       <div className="flex justify-between">
@@ -31,7 +32,7 @@ export default function layout({ children } : {children: React.ReactNode}) {
             <span>Post</span>
           </Button>
 
-          <Button className="mt-auto mb-5" onClick={() => signOut()}>Sign Out</Button>
+          <Button className="mt-auto mb-5" variant="outline" onClick={() => signOut()}>Sign Out</Button>
         </aside>
         <section className="mt-3 w-full">
           {children}
@@ -41,6 +42,7 @@ export default function layout({ children } : {children: React.ReactNode}) {
             <Input placeholder="Search" className="ps-14 w-[21rem]" />
             <Search className="absolute top-3.5 left-4 text-muted-foreground" size={18} />
           </div>
+          <FollowBar/>
           <div className="flex flex-col px-5 py-2 bg-background rounded-2xl mt-5">
             <h2 className="text-xl text-center">Made by Amirhossein Amiri</h2>
             <p className="text-lg text-right mt-4">این پروژه برای درس توسعه وب طراحی شده است</p>
@@ -51,5 +53,6 @@ export default function layout({ children } : {children: React.ReactNode}) {
           </div>
         </aside>
       </div>
-    </Container>);
+    </Container>
+  )
 }

@@ -64,7 +64,7 @@ export function LoginForm() {
                     loading
                 </div>
                 :
-                <form onSubmit={form.handleSubmit(onSubmit)} className="px-[5rem] h-[24.5rem]">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="px-[5rem]">
                     <h2 className="text-3xl font-bold mt-2">
                         Sign in to X
                     </h2>
