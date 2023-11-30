@@ -5,21 +5,27 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import useUser from "@/hooks/useUser";
 import { Button } from "../ui/button";
 import { CalendarDays } from "lucide-react";
-import { useSession } from "next-auth/react";
-import prismadb from "@/lib/prismadb";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import Image from "next/image";
+import { EditForm } from "../forms/EditForm";
+import useFollow from "@/hooks/useFollow";
 
 const UserBio = ({ userId }: { userId: string }) => {
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedUser } = useUser(userId);
+  const { isFollowing, toggleFollow } = useFollow(userId);
 
-  const createdAt = useMemo(() => {    
+  const createdAt = useMemo(() => {
     if (!fetchedUser?.createdAt) {
       return null;
     }
-
-    console.log(currentUser?.id === userId)
-    console.log(currentUser)
-    console.log(userId)
 
     return format(new Date(fetchedUser.createdAt), 'MMMM yyyy');
   }, [fetchedUser?.createdAt])
@@ -29,9 +35,27 @@ const UserBio = ({ userId }: { userId: string }) => {
     <div className="border-b-2 pb-5">
       <div className="flex justify-end m-5">
         {currentUser?.id === userId ?
-          <Button variant="outline" size={"md"}>Set up Profile</Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" size={"md"}>Set up Profile</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle className="flex justify-center items-center !mt-[-1rem]">
+                  <Image src="/z.svg" alt="Z Logo" width={40} height={40} />
+                </DialogTitle>
+              </DialogHeader>
+              <EditForm />
+            </DialogContent>
+          </Dialog>
           :
-          <Button variant="outline" size={"md"}>Follow</Button>
+          <Button
+            onClick={toggleFollow}
+            variant="outline"
+            size={"md"}
+            className={isFollowing || `bg-white text-black hover:text-white`}>
+            {isFollowing ? "Unfollow" : "Follow"}
+          </Button>
         }
       </div>
       <div className="ms-6">

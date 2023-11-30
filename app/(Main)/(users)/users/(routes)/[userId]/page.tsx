@@ -1,19 +1,18 @@
 "use client"
 
+import PostFeed from '@/components/post/PostFeed';
 import { Button } from '@/components/ui/button';
 import UserBio from '@/components/users/UserBio';
 import UserHero from '@/components/users/UserHero';
 import useUser from '@/hooks/useUser';
-import { ArrowLeft, Home, Loader2, MoveLeft } from 'lucide-react';
+import { ArrowLeft, Loader2 } from 'lucide-react';
 import { useParams } from 'next/navigation';
-import { useRouter } from 'next/router';
-import React from 'react'
 
 const UserPage = () => {
   const params = useParams();
-  const userId = params.userId;
+  const userId = params.userId.toString();
 
-  const { data: fetchedUser, isLoading } = useUser(userId as string);
+  const { data: fetchedUser, isLoading } = useUser(userId);
 
   if (isLoading || !fetchedUser) {
     return (
@@ -25,15 +24,16 @@ const UserPage = () => {
   }
 
   return (
-    <div className=''>
+    <div>
       <div className='flex items-center pb-3 px-2 border-b'>
         <Button size="custom" variant="secondary">
           <ArrowLeft size={20} />
         </Button>
         <h1 className='ms-2 text-lg'> {fetchedUser?.name} </h1>
       </div>
-      <UserHero userId={userId as string} />
-      <UserBio userId={userId as string} />
+      <UserHero userId={userId} />
+      <UserBio userId={userId} />
+      <PostFeed userId={userId} />
     </div>
   )
 }

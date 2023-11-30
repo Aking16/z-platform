@@ -1,13 +1,25 @@
-import serverAuth from '@/lib/serverAuth';
-import { NextApiRequest, NextApiResponse } from 'next';
+import prismadb from '@/lib/prismadb';
+import { getServerSession } from 'next-auth';
+import { NextResponse } from 'next/server';
+import { authOptions } from '../auth/[...nextauth]/route';
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
   try {
-    const { currentUser } = await serverAuth(req, res);
+    const session = await getServerSession(authOptions)
 
-    return res.status(200).json(currentUser);
+    if (!session?.user?.email) {
+      return new NextResponse("Unauthorized", { status: 401 })
+    }
+
+    const currentUser = await prismadb.user.findUnique({
+      where: {
+        email: session.user.email
+      }
+    })
+
+    return NextResponse.json(currentUser);
   } catch (error) {
     console.log(error);
-    return res.status(400).end();
+    return new NextResponse("Internal Error", { status: 500 })
   }
 }
