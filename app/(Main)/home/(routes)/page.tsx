@@ -10,7 +10,7 @@ const HomePage = () => {
   return (
     <div className=''>
       <h1 className="text-center pb-3 border-b"> Home </h1>
-      <PostForm />
+      <PostForm placeHolder="What's happening?!"/>
       <Separator className='mt-5' />
       <PostFeed />
     </div>

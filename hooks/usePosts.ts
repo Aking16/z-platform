@@ -5,7 +5,7 @@ const usePosts = (userId?: string) => {
   let url;
 
   if (userId) {
-    url = `/api/posts/${userId}`
+    url = `/api/posts?userId=${userId}`
   } else {
     url = '/api/posts'
   }

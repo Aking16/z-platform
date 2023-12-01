@@ -21,6 +21,7 @@ import toast from 'react-hot-toast'
 import Avatar from "../avatar"
 import { Textarea } from "../ui/textarea"
 import usePosts from "@/hooks/usePosts"
+import usePost from "@/hooks/usePost"
 
 const FormSchema = z.object({
     post: z.string({
@@ -28,10 +29,17 @@ const FormSchema = z.object({
     })
 })
 
-export function PostForm() {
+interface PostFormProps {
+    placeHolder: string;
+    isComment?: boolean;
+    postId?: string;
+}
+
+export function PostForm({ placeHolder, isComment, postId }: PostFormProps) {
     const { data: currentUser } = useCurrentUser();
     const [loading, setLoading] = useState(false);
     const { mutate: mutatePosts } = usePosts();
+    const { mutate: mutatePost } = usePost(postId as string);
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -40,14 +48,15 @@ export function PostForm() {
     function onSubmit(values: z.infer<typeof FormSchema>) {
         setLoading(true);
 
-        axios.post('/api/posts', values).then(() => {
+        const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts'
+
+        axios.post(url, values).then(() => {
             toast.success("Post Created!", { style: { color: "#fff", background: "#000" } });
             mutatePosts();
+            mutatePost();
         }).catch(() => {
             toast.error("We couldn't create your post!", { style: { color: "#fff", background: "#000" } });
         }).finally(() => setLoading(false));
-
-
     }
     return (
         <Form {...form}>
@@ -69,7 +78,7 @@ export function PostForm() {
                                             <Avatar userId={currentUser?.id} />
                                         </div>
                                         <Textarea
-                                            placeholder="What's happening?!"
+                                            placeholder={placeHolder}
                                             className="resize-none text-lg"
                                             {...field}
                                         />

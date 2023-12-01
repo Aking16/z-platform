@@ -5,7 +5,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function POST(request: NextRequest) {
     try {
-        const { userId } = await request.json();
+        const { postId } = await request.json();
 
         const session = await getServerSession(authOptions)
 
@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
             return new NextResponse("Unauthorized", { status: 401 })
         }
 
-        if (!userId || typeof userId !== 'string') {
+        if (!postId || typeof postId !== 'string') {
             return new NextResponse("Invalid ID", { status: 400 })
         }
 
@@ -23,30 +23,30 @@ export async function POST(request: NextRequest) {
             }
         })
 
-        const user = await prismadb.user.findUnique({
+        const post = await prismadb.post.findUnique({
             where: {
-                id: userId
+                id: postId
             }
         })
-        
+
         if (!currentUser?.id) {
             return new NextResponse("Invalid ID", { status: 400 })
         }
 
-        let updatedFollowingIds = [...(user?.followingIds || [])];
+        let updatedLikedIds = [...(post?.likedIds || [])];
 
-        updatedFollowingIds.push(userId);
+        updatedLikedIds.push(currentUser.id);
 
-        const updatedUser = await prismadb.user.update({
+        const updatedPost = await prismadb.post.update({
             where: {
-                id: currentUser.id
+                id: postId
             },
             data: {
-                followingIds: updatedFollowingIds
+                likedIds: updatedLikedIds
             }
         })
 
-        return NextResponse.json(updatedUser);
+        return NextResponse.json(updatedPost);
     } catch (error) {
         console.log(error);
         return new NextResponse("Internal Error", { status: 500 })
@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
     try {
-        const { userId } = await request.json();
+        const { postId } = await request.json();
 
         const session = await getServerSession(authOptions)
 
@@ -63,8 +63,8 @@ export async function DELETE(request: NextRequest) {
             return new NextResponse("Unauthorized", { status: 401 })
         }
 
-        if (!userId) {
-            return new NextResponse("Unauthorized", { status: 401 })
+        if (!postId || typeof postId !== 'string') {
+            return new NextResponse("Invalid ID", { status: 400 })
         }
 
         const currentUser = await prismadb.user.findUnique({
@@ -73,31 +73,30 @@ export async function DELETE(request: NextRequest) {
             }
         })
 
-        const user = await prismadb.user.findUnique({
+        const post = await prismadb.post.findUnique({
             where: {
-                id: userId
+                id: postId
             }
         })
 
-        
         if (!currentUser?.id) {
-            return new NextResponse("Missing Info", { status: 400 })
+            return new NextResponse("Invalid ID", { status: 400 })
         }
 
-        let updatedFollowingIds = [...(user?.followingIds || [])];
+        let updatedLikedIds = [...(post?.likedIds || [])];
 
-        updatedFollowingIds.filter((followingId) => followingId !== userId);
+        updatedLikedIds = updatedLikedIds.filter((likedId) => likedId !== currentUser.id);
 
-        const updatedUser = await prismadb.user.update({
+        const updatedPost = await prismadb.post.update({
             where: {
-                id: currentUser.id
+                id: postId
             },
             data: {
-                followingIds: updatedFollowingIds
+                likedIds: updatedLikedIds
             }
         })
 
-        return NextResponse.json(user);
+        return NextResponse.json(updatedPost);
     } catch (error) {
         console.log(error);
         return new NextResponse("Internal Error", { status: 500 })

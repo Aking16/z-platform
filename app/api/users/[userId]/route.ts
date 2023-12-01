@@ -8,7 +8,7 @@ export async function GET(request: NextApiRequest, { params }: { params: { userI
         const userId = params.userId;
 
         if (!userId || typeof userId !== 'string') {
-            return new NextResponse("Invalid ID", { status: 500 })
+            return new NextResponse("Invalid ID", { status: 400 })
         }
 
         const exsitingUser = await prismadb.user.findUnique({

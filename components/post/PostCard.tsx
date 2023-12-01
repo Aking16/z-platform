@@ -8,6 +8,7 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
 import { Heart, MessageCircle, Reply } from 'lucide-react';
+import useLike from '@/hooks/useLike';
 
 interface PostCardProps {
     data: Record<string, any>;
@@ -17,15 +18,17 @@ interface PostCardProps {
 const PostCard: React.FC<PostCardProps> = ({ data = {}, userId }) => {
     const router = useRouter();
     const { data: currentUser } = useCurrentUser();
+    const { hasLiked, toggleLike } = useLike({ postId: data.id, userId })
 
     const goToPost = useCallback(() => {
         router.push(`/posts/${data.id}`);
     }, [router, data.id]);
 
-    // const onLike = useCallback(async (ev: any) => {
-    //     ev.stopPropagation();
+    const onLike = useCallback(async (ev: any) => {
+        ev.stopPropagation();
 
-    // }, [currentUser]);
+        toggleLike();
+    }, [toggleLike]);
 
     const CreatedAt = useMemo(() => {
         if (!data?.createdAt) {
@@ -53,17 +56,18 @@ const PostCard: React.FC<PostCardProps> = ({ data = {}, userId }) => {
                                 <MessageCircle size={20} />
                             </button>
                             <span className="text-muted group-hover:text-secondary">
-                                0
+                                {data.comments?.length || 0}
                             </span>
                             <button />
                         </div>
                         <div className="flex gap-x-1 items-center group">
                             <button
+                                onClick={onLike}
                                 className="text-muted rounded-full p-1 group-hover:text-pink-600 group-hover:bg-pink-600/30">
-                                <Heart size={20} />
+                                <Heart size={20} className={hasLiked ? `text-pink-600 fill-pink-600` : `fill-none`} />
                             </button>
                             <span className="text-muted group-hover:text-pink-600">
-                                0
+                                {data.likedIds.length}
                             </span>
                             <button />
                         </div>

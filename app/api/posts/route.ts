@@ -38,15 +38,34 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
     try {
-        const posts = await prismadb.post.findMany({
-            include: {
-                user: true,
-                comments: true
-            },
-            orderBy: {
-                createdAt: 'desc'
-            }
-        });
+        const { searchParams } = new URL(request.url);
+        const userId = searchParams.get("userId");
+        let posts;
+
+        if (userId) {
+            posts = await prismadb.post.findMany({
+                where: {
+                    userId
+                },
+                include: {
+                    user: true,
+                    comments: true
+                },
+                orderBy: {
+                    createdAt: 'desc'
+                },
+            });
+        } else {
+            posts = await prismadb.post.findMany({
+                include: {
+                    user: true,
+                    comments: true
+                },
+                orderBy: {
+                    createdAt: 'desc'
+                }
+            });
+        }
 
         return NextResponse.json(posts);
     } catch (error) {

@@ -11,7 +11,6 @@ import { useParams } from 'next/navigation';
 const UserPage = () => {
   const params = useParams();
   const userId = params.userId.toString();
-
   const { data: fetchedUser, isLoading } = useUser(userId);
 
   if (isLoading || !fetchedUser) {
