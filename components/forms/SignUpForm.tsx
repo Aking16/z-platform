@@ -28,6 +28,11 @@ const FormSchema = z.object({
     }).min(6, {
         message: "Username must be at least 6 characters.",
     }),
+    name: z.string({
+        required_error: "Please enter your name!"
+    }).min(6, {
+        message: "Name must be at least 6 characters.",
+    }),
     email: z.string({
         required_error: "Please enter your email!"
     }).email(),
@@ -78,6 +83,19 @@ export function SignUpForm() {
                                 <FormLabel className="text-slate-400">Username</FormLabel>
                                 <FormControl>
                                     <Input placeholder="Username" {...field} className="bg-primary border rounded-sm py-7 focus:border-secondary focus-visible:ring-0" />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                            <FormItem className="mt-5">
+                                <FormLabel className="text-slate-400">Name</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Name" {...field} className="bg-primary border rounded-sm py-7 focus:border-secondary focus-visible:ring-0" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

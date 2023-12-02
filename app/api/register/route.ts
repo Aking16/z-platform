@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
     try {
-        const { email, password, username } = await request.json();
+        const { email, password, username, name } = await request.json();
 
         if (!email || !username || !password) {
             return new NextResponse("Missing Info", { status: 400 })
@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
             data: {
                 email,
                 username,
+                name,
                 hashedPassword
             }
         })

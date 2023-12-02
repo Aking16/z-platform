@@ -6,12 +6,12 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  id                String      @id @default(uuid())
   name              String?
   bio               String?
   username          String      @unique
@@ -23,7 +23,7 @@ model User {
   profileImage      String?
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
-  followingIds      String[]    @db.ObjectId
+  followingIds      String[]   
   hasNotficiation   Boolean?
 
   posts             Post[]
@@ -32,34 +32,34 @@ model User {
 }
 
 model Post {
-  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  id                String      @id @default(uuid())
   body              String
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
-  userId            String      @db.ObjectId
-  likedIds          String[]    @db.ObjectId
+  userId            String     
+  likedIds          String[]   
 
   user              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   comments          Comment[]
 }
 
 model Comment {
-  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  id                String      @id @default(uuid())
   body              String
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
-  userId            String      @db.ObjectId
-  postId            String      @db.ObjectId
+  userId            String     
+  postId            String     
 
   user              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   post              Post        @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
 model Notification {
-  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  id                String      @id @default(uuid())
   body              String
   createdAt         DateTime    @default(now())
-  userId            String      @db.ObjectId
+  userId            String     
 
   user              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

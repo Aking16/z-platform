@@ -23,14 +23,6 @@ import { Loader2 } from "lucide-react"
 import axios from "axios"
 import ImageUpload from "../ImageUpload"
 
-const MAX_FILE_SIZE = 1024 * 1024 * 5;
-const ACCEPTED_IMAGE_MIME_TYPES = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/webp",
-];
-const ACCEPTED_IMAGE_TYPES = ["jpeg", "jpg", "png", "webp"];
 const FormSchema = z.object({
     name: z.string({
         required_error: "Please enter your name!"
@@ -51,19 +43,31 @@ const FormSchema = z.object({
 export function EditForm() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [file, setFile] = useState<File>()
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
     })
 
     function onSubmit(values: z.infer<typeof FormSchema>) {
+        const data = new FormData()
+        if (file) {
+            data.append('name', values.name)
+            data.append('username', values.username)
+            data.append('bio', values.bio)
+            data.append('file', file)
+            console.log(file)
+        }
+
         setLoading(true);
 
-        axios.patch('/api/edit', values).then(() => {
+        axios.patch('/api/edit', data, { headers: { "Content-Type": "multipart/form-data" } }).then(() => {
             toast.success("Account Edited!", { style: { color: "#fff", background: "#000" } });
         }).catch(() => {
             toast.error("We couldn't edit your account!", { style: { color: "#fff", background: "#000" } });
         }).finally(() => setLoading(false));
+
+
     }
     return (
         <Form {...form}>
@@ -75,7 +79,7 @@ export function EditForm() {
                 :
                 <form onSubmit={form.handleSubmit(onSubmit)} className="px-[5rem]">
                     <h2 className="text-3xl font-bold mt-2">
-                        Sign in to X
+                        Edit your profile!
                     </h2>
 
                     <FormField
@@ -112,6 +116,19 @@ export function EditForm() {
                                 <FormLabel className="text-slate-400">Bio</FormLabel>
                                 <FormControl>
                                     <Input placeholder="Bio" {...field} className="bg-primary border rounded-sm py-7 focus:border-secondary focus-visible:ring-0" />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="profileImage"
+                        render={({ field }) => (
+                            <FormItem className="mt-5">
+                                <FormLabel className="text-slate-400">Profile Image</FormLabel>
+                                <FormControl>
+                                    <Input type="file" {...field} className="bg-primary border rounded-sm focus:border-secondary focus-visible:ring-0" onChange={(e) => setFile(e.target.files?.[0])} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

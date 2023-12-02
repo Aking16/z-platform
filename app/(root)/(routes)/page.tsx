@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog"
 
 import { LoginForm } from '@/components/forms/login-form';
-import { SignUpForm } from '@/components/forms/signUp-form';
+import { SignUpForm } from '@/components/forms/SignUpForm';
 import prismadb from '@/lib/prismadb';
 
 const RootPage = () => {

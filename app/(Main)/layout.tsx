@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Input } from "@/components/ui/input";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { Home, Mail, Search, User2 } from "lucide-react";
+import { Bell, Dot, Home, Mail, Search, User2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,9 +25,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       icon: <User2 size={28} className="me-5" />
     },
     {
-      label: "Messages",
-      href: `/messages`,
-      icon: <Mail size={28} className="me-5" />
+      label: "Notifications",
+      href: `/notification`,
+      icon: <Bell size={28} className="me-5" />,
+      alert: currentUser?.hasNotficiation
     }
   ]
   return (
@@ -38,7 +39,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           {routes.map((route) => (
             <Link href={route.href} key={route.label}>
-              <Button size="custom" variant="secondary" className="text-2xl font-bold w-fit">
+              <Button size="custom" variant="secondary" className="text-2xl font-bold w-fit relative">
+                {route.alert && <Dot size={70} className="absolute -top-5 -left-4 text-secondary" />}
                 {route.icon}
                 <span className="me-auto">{route.label}</span>
               </Button>

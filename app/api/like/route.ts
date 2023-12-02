@@ -46,6 +46,37 @@ export async function POST(request: NextRequest) {
             }
         })
 
+        try {
+            const post = await prismadb.post.findUnique({
+                where: {
+                    id: postId
+                },
+                include: {
+                    user: true
+                }
+            })
+
+            if (post?.userId) {
+                await prismadb.notification.create({
+                    data: { 
+                        body: `${post.user.name} liked your tweet!`,
+                        userId: post.userId
+                    }
+                })
+
+                await prismadb.user.update({
+                    where: {
+                        id: post.userId
+                    },
+                    data: {
+                        hasNotficiation: true
+                    }
+                })
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
         return NextResponse.json(updatedPost);
     } catch (error) {
         console.log(error);
