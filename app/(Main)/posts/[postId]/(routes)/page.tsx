@@ -1,11 +1,14 @@
 "use client"
 
 import { PostForm } from '@/components/forms/PostForm';
+import Header from '@/components/layout/Header';
 import CommentFeed from '@/components/post/CommentFeed';
 import PostCard from '@/components/post/PostCard';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import usePost from '@/hooks/usePost';
-import { Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2 } from 'lucide-react';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import React from 'react'
 
@@ -24,12 +27,12 @@ const PostIdPage = () => {
     }
 
     return (
-        <div className=''>
-            <h1 className="text-center pb-3 border-b"> Post </h1>
+        <div>
+            <Header title="Post" backArrow />
             <PostCard data={fetchedPost} />
             <PostForm placeHolder="Tweet your reply!" isComment postId={postId} />
             <Separator className='mt-5' />
-            <CommentFeed comments={fetchedPost?.comments}/>
+            <CommentFeed comments={fetchedPost?.comments} />
         </div>
     )
 }

@@ -1,15 +1,14 @@
 "use client"
 
 import { PostForm } from '@/components/forms/PostForm';
-import PostCard from '@/components/post/PostCard';
+import Header from '@/components/layout/Header';
 import PostFeed from '@/components/post/PostFeed';
 import { Separator } from '@/components/ui/separator';
-import usePosts from '@/hooks/usePosts';
 
 const HomePage = () => {
   return (
-    <div className=''>
-      <h1 className="text-center pb-3 border-b"> Home </h1>
+    <div className='h-[100rem]'>
+      <Header title="Home" center hasBorder/>
       <PostForm placeHolder="What's happening?!"/>
       <Separator className='mt-5' />
       <PostFeed />

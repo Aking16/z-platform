@@ -66,16 +66,7 @@ export async function PATCH(req: NextRequest) {
             }
         })
 
-        return NextResponse.json({
-            updatedUser,
-            // name,
-            // username,
-            // bio,
-            // path: url + file.name,
-            // fileName: file.name,
-            // size: file.size,
-            // lastModified: new Date(file.lastModified),
-        });
+        return NextResponse.json(updatedUser);
     } catch (error) {
         console.log(error);
         return new NextResponse("Internal Error", { status: 500 })

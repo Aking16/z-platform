@@ -18,7 +18,7 @@ import useCurrentUser from "@/hooks/useCurrentUser"
 import axios from "axios"
 import { Loader2, Smile } from "lucide-react"
 import toast from 'react-hot-toast'
-import Avatar from "../avatar"
+import Avatar from "../Avatar"
 import { Textarea } from "../ui/textarea"
 import usePosts from "@/hooks/usePosts"
 import usePost from "@/hooks/usePost"

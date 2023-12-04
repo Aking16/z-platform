@@ -1,11 +1,11 @@
 "use client"
 
+import Header from '@/components/layout/Header';
 import PostFeed from '@/components/post/PostFeed';
-import { Button } from '@/components/ui/button';
 import UserBio from '@/components/users/UserBio';
 import UserHero from '@/components/users/UserHero';
 import useUser from '@/hooks/useUser';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useParams } from 'next/navigation';
 
 const UserPage = () => {
@@ -24,12 +24,7 @@ const UserPage = () => {
 
   return (
     <div>
-      <div className='flex items-center pb-3 px-2 border-b'>
-        <Button size="custom" variant="secondary">
-          <ArrowLeft size={20} />
-        </Button>
-        <h1 className='ms-2 text-lg'> {fetchedUser?.name} </h1>
-      </div>
+      <Header title={fetchedUser.name} backArrow />
       <UserHero userId={userId} />
       <UserBio userId={userId} />
       <PostFeed userId={userId} />

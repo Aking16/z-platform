@@ -15,7 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-import { LoginForm } from '@/components/forms/login-form';
+import { LoginForm } from '@/components/forms/LoginForm';
 import { SignUpForm } from '@/components/forms/SignUpForm';
 import prismadb from '@/lib/prismadb';
 

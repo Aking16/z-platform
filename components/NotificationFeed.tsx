@@ -2,14 +2,24 @@ import Image from 'next/image';
 import useNotifications from '@/hooks/useNotifications';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import { useEffect } from 'react';
+import { Loader2 } from 'lucide-react';
 
 const NotificationFeed = () => {
     const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
-    const { data: fetchedNotifications = [] } = useNotifications(currentUser?.id);
+    const { data: fetchedNotifications = [], isLoading } = useNotifications(currentUser?.id);
 
     useEffect(() => {
         mutateCurrentUser();
     }, [mutateCurrentUser]);
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-[24.5rem]">
+                <Loader2 className="animate-spin me-2 text-secondary" />
+                loading
+            </div>
+        )
+    }
 
     if (fetchedNotifications.length === 0) {
         return (

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useMemo } from 'react'
-import Avatar from '../avatar';
+import Avatar from '../Avatar';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import { Separator } from '../ui/separator';
 import { formatDistanceToNowStrict } from 'date-fns';
@@ -34,12 +34,14 @@ const CommentCard: React.FC<CommentCardProps> = ({ data = {} }) => {
             <div className="flex px-4 py-3 hover:bg-white/5" onClick={goToUser}>
                 <Avatar userId={data.user.id} />
                 <div className="flex flex-1 flex-col ms-5">
-                    <div className="flex items-center gap-x-3">
-                        <p className="font-bold">{data.user.name}</p>
-                        <p className="text-muted">@{data.user.username}</p>
-                        <p className="text-muted">{CreatedAt}</p>
+                    <div className="flex items-center">
+                        <div className="flex flex-col md:flex-row gap-x-3">
+                            <p className="font-bold">{data.user.name}</p>
+                            <p className="text-muted">@{data.user.username}</p>
+                        </div>
+                        <p className="ms-auto text-muted">{CreatedAt}</p>
                     </div>
-                    <p>{data.body}</p>
+                    <p className="mt-2">{data.body}</p>
                 </div>
             </div>
 
