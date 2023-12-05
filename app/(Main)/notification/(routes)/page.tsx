@@ -6,10 +6,10 @@ import Header from "@/components/layout/Header";
 const NotificationPage = () => {
 
     return (
-        <div>
+        <section>
             <Header title="Notifications" backArrow />
             <NotificationFeed />
-        </div>
+        </section>
     )
 }
 

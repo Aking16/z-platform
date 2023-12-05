@@ -33,3 +33,25 @@ export async function GET(request: NextRequest, { params }: { params: { userId: 
         return new NextResponse("Internal Error", { status: 500 })
     }
 }
+
+export async function DELETE(request: NextRequest) {
+    try {
+        const { searchParams } = new URL(request.url);
+        const notifId = searchParams.get("notifId");
+
+        if (!notifId || typeof notifId !== 'string') {
+            return new NextResponse("Invalid ID", { status: 400 })
+        }
+
+        await prismadb.notification.delete({
+            where: {
+                id: notifId
+            }
+        });
+
+        return NextResponse.json("Notification Deleted");
+    } catch (error) {
+        console.log(error);
+        return new NextResponse("Internal Error", { status: 500 })
+    }
+}

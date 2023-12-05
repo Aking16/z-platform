@@ -15,20 +15,20 @@ const UserPage = () => {
 
   if (isLoading || !fetchedUser) {
     return (
-      <div className="flex justify-center items-center h-[24.5rem]">
+      <section className="flex justify-center items-center h-[24.5rem]">
         <Loader2 className="animate-spin me-2 text-secondary" />
         loading
-      </div>
+      </section>
     )
   }
 
   return (
-    <div>
+    <section>
       <Header title={fetchedUser.name} backArrow />
       <UserHero userId={userId} />
       <UserBio userId={userId} />
       <PostFeed userId={userId} />
-    </div>
+    </section>
   )
 }
 

@@ -29,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   ]
   return (
     <Container>
-      <div className="flex justify-between">
+      <main className="flex justify-between">
         <SideNavBar routes={routes} />
 
         <section className="pt-1 w-full border-x border-border ">
@@ -37,7 +37,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </section>
 
         <SideBarLeft />
-      </div>
+      </main>
     </Container>
   )
 }

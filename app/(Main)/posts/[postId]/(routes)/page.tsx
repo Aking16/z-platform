@@ -19,21 +19,21 @@ const PostIdPage = () => {
 
     if (isLoading || !fetchedPost) {
         return (
-            <div className="flex justify-center items-center h-[24.5rem]">
+            <section className="flex justify-center items-center h-[24.5rem]">
                 <Loader2 className="animate-spin me-2 text-secondary" />
                 loading
-            </div>
+            </section>
         )
     }
 
     return (
-        <div>
+        <section>
             <Header title="Post" backArrow />
             <PostCard data={fetchedPost} />
             <PostForm placeHolder="Tweet your reply!" isComment postId={postId} />
             <Separator className='mt-5' />
             <CommentFeed comments={fetchedPost?.comments} />
-        </div>
+        </section>
     )
 }
 

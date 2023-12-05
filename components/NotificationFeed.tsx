@@ -1,12 +1,14 @@
-import Image from 'next/image';
-import useNotifications from '@/hooks/useNotifications';
 import useCurrentUser from '@/hooks/useCurrentUser';
+import useNotifications from '@/hooks/useNotifications';
+import axios from 'axios';
+import { Loader2, X } from 'lucide-react';
+import Image from 'next/image';
 import { useEffect } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Button } from './ui/button';
 
 const NotificationFeed = () => {
     const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
-    const { data: fetchedNotifications = [], isLoading } = useNotifications(currentUser?.id);
+    const { data: fetchedNotifications = [], mutate: mutateNotification, isLoading } = useNotifications(currentUser?.id);
 
     useEffect(() => {
         mutateCurrentUser();
@@ -29,6 +31,11 @@ const NotificationFeed = () => {
         )
     }
 
+    async function HandleDelete(notifId: string) {
+        await axios.delete(`/api/notification/${currentUser.id}?notifId=${notifId}`);
+        mutateNotification();
+    }
+
     return (
         <div className="flex flex-col">
             {fetchedNotifications.map((notification: Record<string, any>) => (
@@ -37,6 +44,13 @@ const NotificationFeed = () => {
                     <p>
                         {notification.body}
                     </p>
+                    <Button
+                        variant="link"
+                        size="sm"
+                        className="ms-auto hover:text-white hover:bg-destructive hover:border-destructive"
+                        onClick={() => HandleDelete(notification.id)}>
+                        <X size={16}/>
+                    </Button>
                 </div>
             ))}
         </div>

@@ -9,7 +9,7 @@ const UserHero = ({ userId }: { userId: string }) => {
     <div>
       <div className="bg-[#333639] h-[12.5rem] relative">
         {fetchedUser?.coverImage && (
-          <Image src={fetchedUser.coverImage} fill alt="Cover Image" style={{ objectFit: 'cover' }} />
+          <Image src={fetchedUser.coverImage} fill alt="Cover Image" style={{ objectFit: 'contain' }} />
         )}
         <div className="absolute -bottom-16 left-4">
           <Avatar userId={userId} isLarge hasBorder />

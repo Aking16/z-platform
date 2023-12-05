@@ -1,26 +1,24 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
 import axios from "axios"
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
-    FormMessage,
+    FormMessage
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import toast from 'react-hot-toast';
 import { Loader2 } from "lucide-react"
 import { signIn } from "next-auth/react"
+import toast from 'react-hot-toast'
 
 const FormSchema = z.object({
     username: z.string({
@@ -30,8 +28,8 @@ const FormSchema = z.object({
     }),
     name: z.string({
         required_error: "Please enter your name!"
-    }).min(6, {
-        message: "Name must be at least 6 characters.",
+    }).min(2, {
+        message: "Name must be at least 2 characters.",
     }),
     email: z.string({
         required_error: "Please enter your email!"
@@ -44,7 +42,6 @@ const FormSchema = z.object({
 })
 
 export function SignUpForm() {
-    const router = useRouter();
     const [loading, setLoading] = useState(false);
 
     const form = useForm<z.infer<typeof FormSchema>>({

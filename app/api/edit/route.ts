@@ -11,15 +11,18 @@ export async function PATCH(req: NextRequest) {
         const session = await getServerSession(authOptions);
         const formData = await req.formData();
 
-        let url = await req.url;
-        url = url.split('api')[0] + "upload/"
+        let urlPI = await req.url;
+        let urlCI = await req.url;
+        urlPI = urlPI.split('api')[0] + "upload/profile-images/"
+        urlCI = urlCI.split('api')[0] + "upload/cover-images/"
 
-        const f = formData.get("file");
+        const profileImage = formData.get("profileImage");
+        const coverImage = formData.get("coverImage");
         const name = formData.get("name")?.toString();
         const username = formData.get("username")?.toString();
         const bio = formData.get("bio")?.toString();
 
-        if (!f) {
+        if (!profileImage && !coverImage) {
             return NextResponse.json("File Not Found", { status: 400 });
         }
 
@@ -37,21 +40,27 @@ export async function PATCH(req: NextRequest) {
             return new NextResponse("Missing Info", { status: 400 })
         }
 
-        const file = f as File;
-        console.log(`File name: ${file.name}`);
-        console.log(`Content-Length: ${file.size}`);
+        const profileImageFile = profileImage as File;
+        const coverImageFile = coverImage as File;
 
-        const destinationDirPath = path.join(process.cwd(), "public/upload");
-        console.log(destinationDirPath);
+        const profileImageDir = path.join(process.cwd(), "public/upload/profile-images");
+        const coverImageDir = path.join(process.cwd(), "public/upload/cover-images");
 
-        const fileArrayBuffer = await file.arrayBuffer();
+        const profileImageArrayBuffer = await profileImageFile.arrayBuffer();
+        const coverImageFileArrayBuffer = await coverImageFile.arrayBuffer();
 
-        if (!existsSync(destinationDirPath)) {
-            fs.mkdir(destinationDirPath, { recursive: true });
+        if (!existsSync(profileImageDir) && !existsSync(coverImageDir)) {
+            fs.mkdir(profileImageDir, { recursive: true });
+            fs.mkdir(coverImageDir, { recursive: true });
         }
         await fs.writeFile(
-            path.join(destinationDirPath, file.name),
-            Buffer.from(fileArrayBuffer)
+            path.join(profileImageDir, profileImageFile.name),
+            Buffer.from(profileImageArrayBuffer),
+        );
+
+        await fs.writeFile(
+            path.join(coverImageDir, coverImageFile.name),
+            Buffer.from(coverImageFileArrayBuffer),
         );
 
         const updatedUser = await prismadb.user.update({
@@ -62,7 +71,8 @@ export async function PATCH(req: NextRequest) {
                 name,
                 username,
                 bio,
-                profileImage: url + file.name
+                profileImage: urlPI + profileImageFile.name,
+                coverImage: urlCI + coverImageFile.name
             }
         })
 

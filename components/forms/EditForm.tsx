@@ -1,27 +1,26 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { signIn } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
-    FormMessage,
+    FormMessage
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import toast from 'react-hot-toast';
-import { Loader2 } from "lucide-react"
+import useUser from "@/hooks/useUser"
 import axios from "axios"
-import ImageUpload from "../ImageUpload"
+import { Loader2 } from "lucide-react"
+import Image from "next/image"
+import toast from 'react-hot-toast'
+import { Textarea } from "../ui/textarea"
 
 const FormSchema = z.object({
     name: z.string({
@@ -37,13 +36,15 @@ const FormSchema = z.object({
     bio: z.string({
         required_error: "Please enter your bio!"
     }),
-    profileImage: z.any()
+    profileImage: z.any(),
+    coverImage: z.any()
 })
 
-export function EditForm() {
-    const router = useRouter();
+export function EditForm({ userId }: { userId: string }) {
+    const { data: fetchedUser, mutate: mutateUser } = useUser(userId);
     const [loading, setLoading] = useState(false);
-    const [file, setFile] = useState<File>()
+    const [profileImage, setprofileImage] = useState<File>()
+    const [coverImage, setCoverImage] = useState<File>()
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -51,18 +52,19 @@ export function EditForm() {
 
     function onSubmit(values: z.infer<typeof FormSchema>) {
         const data = new FormData()
-        if (file) {
+        if (profileImage && coverImage) {
             data.append('name', values.name)
             data.append('username', values.username)
             data.append('bio', values.bio)
-            data.append('file', file)
-            console.log(file)
+            data.append('profileImage', profileImage)
+            data.append('coverImage', coverImage)
         }
 
         setLoading(true);
 
         axios.patch('/api/edit', data, { headers: { "Content-Type": "multipart/form-data" } }).then(() => {
             toast.success("Account Edited!", { style: { color: "#fff", background: "#000" } });
+            mutateUser();
         }).catch(() => {
             toast.error("We couldn't edit your account!", { style: { color: "#fff", background: "#000" } });
         }).finally(() => setLoading(false));
@@ -85,6 +87,7 @@ export function EditForm() {
                     <FormField
                         control={form.control}
                         name="name"
+                        defaultValue={fetchedUser.name}
                         render={({ field }) => (
                             <FormItem className="mt-5">
                                 <FormLabel className="text-slate-400">Name</FormLabel>
@@ -98,6 +101,7 @@ export function EditForm() {
                     <FormField
                         control={form.control}
                         name="username"
+                        defaultValue={fetchedUser.username}
                         render={({ field }) => (
                             <FormItem className="mt-5">
                                 <FormLabel className="text-slate-400">Username</FormLabel>
@@ -111,11 +115,12 @@ export function EditForm() {
                     <FormField
                         control={form.control}
                         name="bio"
+                        defaultValue={fetchedUser.bio}
                         render={({ field }) => (
                             <FormItem className="mt-5">
                                 <FormLabel className="text-slate-400">Bio</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Bio" {...field} className="bg-primary border rounded-sm py-7 focus:border-secondary focus-visible:ring-0" />
+                                    <Textarea placeholder="Bio" {...field} className="bg-primary border rounded-sm focus:border-secondary focus-visible:ring-0" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -128,12 +133,26 @@ export function EditForm() {
                             <FormItem className="mt-5">
                                 <FormLabel className="text-slate-400">Profile Image</FormLabel>
                                 <FormControl>
-                                    <Input type="file" {...field} className="bg-primary border rounded-sm focus:border-secondary focus-visible:ring-0" onChange={(e) => setFile(e.target.files?.[0])} />
+                                    <Input type="file" {...field} className="bg-primary border rounded-sm focus:border-secondary focus-visible:ring-0" onChange={(e) => setprofileImage(e.target.files?.[0])} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
+                    <FormField
+                        control={form.control}
+                        name="coverImage"
+                        render={({ field }) => (
+                            <FormItem className="mt-5">
+                                <FormLabel className="text-slate-400">Cover Image</FormLabel>
+                                <FormControl>
+                                    <Input type="file" {...field} className="bg-primary border rounded-sm focus:border-secondary focus-visible:ring-0" onChange={(e) => setCoverImage(e.target.files?.[0])} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
                     <Button type="submit" className="mt-20 w-full" disabled={loading}>Next</Button>
                 </form>
             }

@@ -31,7 +31,7 @@ const RootPage = () => {
 
 
   return (
-    <div className="">
+    <main>
       <h1 className="text-6xl font-bold">
         Happening now
       </h1>
@@ -75,7 +75,7 @@ const RootPage = () => {
           <LoginForm />
         </DialogContent>
       </Dialog>
-    </div>
+    </main>
   )
 }
 

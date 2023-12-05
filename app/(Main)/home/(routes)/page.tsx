@@ -7,12 +7,12 @@ import { Separator } from '@/components/ui/separator';
 
 const HomePage = () => {
   return (
-    <div className='h-[100rem]'>
+    <section>
       <Header title="Home" center hasBorder/>
       <PostForm placeHolder="What's happening?!"/>
       <Separator className='mt-5' />
       <PostFeed />
-    </div>
+    </section>
   )
 }
 

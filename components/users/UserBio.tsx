@@ -45,7 +45,7 @@ const UserBio = ({ userId }: { userId: string }) => {
                   <Image src="/z.svg" alt="Z Logo" width={40} height={40} />
                 </DialogTitle>
               </DialogHeader>
-              <EditForm />
+              <EditForm userId={userId} />
             </DialogContent>
           </Dialog>
           :

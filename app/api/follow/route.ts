@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
                 id: userId
             }
         })
-        
+
         if (!currentUser?.id) {
             return new NextResponse("Invalid ID", { status: 400 })
         }
@@ -45,6 +45,26 @@ export async function POST(request: NextRequest) {
                 followingIds: updatedFollowingIds
             }
         })
+
+        try {
+            await prismadb.notification.create({
+                data: {
+                    body: `${currentUser.name} followed you!`,
+                    userId
+                }
+            })
+
+            await prismadb.user.update({
+                where: {
+                    id: userId
+                },
+                data: {
+                    hasNotficiation: true
+                }
+            })
+        } catch (error) {
+            console.log(error);
+        }
 
         return NextResponse.json(updatedUser);
     } catch (error) {
@@ -79,7 +99,7 @@ export async function DELETE(request: NextRequest) {
             }
         })
 
-        
+
         if (!currentUser?.id) {
             return new NextResponse("Missing Info", { status: 400 })
         }
@@ -97,7 +117,27 @@ export async function DELETE(request: NextRequest) {
             }
         })
 
-        return NextResponse.json(user);
+        try {
+            await prismadb.notification.create({
+                data: {
+                    body: `${currentUser.name} unfollowed you!`,
+                    userId
+                }
+            })
+
+            await prismadb.user.update({
+                where: {
+                    id: userId
+                },
+                data: {
+                    hasNotficiation: true
+                }
+            })
+        } catch (error) {
+            console.log(error);
+        }
+
+        return NextResponse.json(updatedUser);
     } catch (error) {
         console.log(error);
         return new NextResponse("Internal Error", { status: 500 })
