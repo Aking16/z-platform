@@ -63,6 +63,7 @@ This is a Twitter Clone built with NextJS and Tailwind. Mainly created this proj
 
 ### Built With
 
+* [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
 * [![Vite][Vite.js]][Vite-url]
 * [![Tailwind][Tailwind.css]][Tailwind-url]
@@ -170,7 +171,11 @@ Project Link: https://github.com/Aking16/z-platform
 [license-url]: https://github.com/Aking16/z-platform/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/amirhossein-amiri016/
+
 [website-screenshot]: preview.png
+
+[Next.js]: https://img.shields.io/badge/Next-61DAFB?style=for-the-badge&logo=react&logoColor=black
+[Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black
 [React-url]: https://reactjs.org/
 [Tailwind.css]: https://img.shields.io/badge/TailwindCss-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white
