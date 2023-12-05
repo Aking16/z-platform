@@ -65,9 +65,8 @@ This is a Twitter Clone built with NextJS and Tailwind. Mainly created this proj
 
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
-* [![Vite][Vite.js]][Vite-url]
+* [![PostgreSql][PostgreSql]][PostgreSql-url]
 * [![Tailwind][Tailwind.css]][Tailwind-url]
-* [![React-Router][React-Router]][React-Router-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -180,7 +179,7 @@ Project Link: https://github.com/Aking16/z-platform
 [React-url]: https://reactjs.org/
 [Tailwind.css]: https://img.shields.io/badge/TailwindCss-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white
 [Tailwind-url]: https://tailwindcss.com
-[Vite.js]: https://img.shields.io/badge/-Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white
-[Vite-url]: https://vitejs.dev
+[PostgreSql]: https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=fff&style=flat-square
+[PostgreSql-url]: https://postgresql.org
 [React-Router]: https://img.shields.io/badge/-reactrouter-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white
 [React-Router-url]: https://reactrouter.com/en/main
