@@ -66,7 +66,9 @@ This is a Twitter Clone built with NextJS and Tailwind. Mainly created this proj
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
 * [![PostgreSql][PostgreSql]][PostgreSql-url]
+* [![Bcrypt][Bcrypt]][Bcrypt-url]
 * [![Tailwind][Tailwind.css]][Tailwind-url]
+* [![Shadcn][Shadcn]][Shadcn-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -175,11 +177,18 @@ Project Link: https://github.com/Aking16/z-platform
 
 [Next.js]: https://img.shields.io/badge/Next-000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
+
 [React.js]: https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black
 [React-url]: https://reactjs.org/
+
 [Tailwind.css]: https://img.shields.io/badge/TailwindCss-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white
 [Tailwind-url]: https://tailwindcss.com
+
+[Shadcn]: https://img.shields.io/badge/Shadcn-000?style=for-the-badge&logo=tailwindcss&logoColor=white
+[Shadcn-url]: https://ui.shadcn.com/
+
 [PostgreSql]: https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=fff&style=for-the-badge
 [PostgreSql-url]: https://postgresql.org
-[React-Router]: https://img.shields.io/badge/-reactrouter-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white
-[React-Router-url]: https://reactrouter.com/en/main
+
+[Bcrypt]: https://img.shields.io/badge/Bcrypt-CA4245?style=for-the-badge&logo=react&logoColor=white
+[Bcrypt-url]: https://www.npmjs.com/package/bcrypt
