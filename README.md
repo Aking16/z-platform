@@ -66,6 +66,7 @@ This is a Twitter Clone built with NextJS and Tailwind. Mainly created this proj
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
 * [![PostgreSql][PostgreSql]][PostgreSql-url]
+* [![Prisma ORM][Prisma]][Prisma-url]
 * [![Bcrypt][Bcrypt]][Bcrypt-url]
 * [![Tailwind][Tailwind.css]][Tailwind-url]
 * [![Shadcn][Shadcn]][Shadcn-url]
@@ -87,7 +88,7 @@ DATABASE_URL:
 NEXT_AUTH_SECRET:
 ```
 
-*This Project was made with postgres as the database, configure Prisma if you plan to use a different database*
+*This Project was made with postgres as the database, [configure Prisma]([Prisma-url]) if you plan to use a different database*
 
 Install Node Package Manager or npm if you don't have it on your device.
 * npm
@@ -191,6 +192,10 @@ Project Link: https://github.com/Aking16/z-platform
 
 [PostgreSql]: https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=fff&style=for-the-badge
 [PostgreSql-url]: https://postgresql.org
+
+[Prisma]: https://img.shields.io/badge/Prisma-2D3748?logo=prisma&logoColor=fff&style=for-the-badge
+[Prisma-url]: https://prisma.io
+
 
 [Bcrypt]: https://img.shields.io/badge/Bcrypt-CA4245?style=for-the-badge&logo=react&logoColor=white
 [Bcrypt-url]: https://www.npmjs.com/package/bcrypt
