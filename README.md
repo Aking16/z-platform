@@ -174,7 +174,7 @@ Project Link: https://github.com/Aking16/z-platform
 
 [website-screenshot]: preview.png
 
-[Next.js]: https://img.shields.io/badge/Next-61DAFB?style=for-the-badge&logo=nextdotjs&logoColor=black
+[Next.js]: https://img.shields.io/badge/Next-fff?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black
 [React-url]: https://reactjs.org/
