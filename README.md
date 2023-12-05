@@ -88,7 +88,7 @@ DATABASE_URL:
 NEXT_AUTH_SECRET:
 ```
 
-*This Project was made with postgres as the database, [configure Prisma]([Prisma-url]) if you plan to use a different database*
+*This Project was made with postgres as the database, [configure Prisma](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project) if you plan to use a different database*
 
 Install Node Package Manager or npm if you don't have it on your device.
 * npm
