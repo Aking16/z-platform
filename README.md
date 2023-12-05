@@ -13,7 +13,7 @@
     <img src="thumbnail.png" alt="Logo">
   </a>
 
-  <h3 align="center">Z Platform - Twitter Clone</h3>
+  <h3 align="center">Z Platform</h3>
 
   <p align="center">
     Twitter Clone with NextJS and Tailwind!
@@ -86,6 +86,8 @@ Create an .env file in your **root** directory and it should contain:
 DATABASE_URL:
 NEXT_AUTH_SECRET:
 ```
+
+*This Project was made with postgres as the database, configure Prisma if you plan to use a different database*
 
 Install Node Package Manager or npm if you don't have it on your device.
 * npm
