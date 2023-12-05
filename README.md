@@ -179,7 +179,7 @@ Project Link: https://github.com/Aking16/z-platform
 [React-url]: https://reactjs.org/
 [Tailwind.css]: https://img.shields.io/badge/TailwindCss-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white
 [Tailwind-url]: https://tailwindcss.com
-[PostgreSql]: https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=fff&style=flat-square
+[PostgreSql]: https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=fff&style=for-the-badge
 [PostgreSql-url]: https://postgresql.org
 [React-Router]: https://img.shields.io/badge/-reactrouter-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white
 [React-Router-url]: https://reactrouter.com/en/main
