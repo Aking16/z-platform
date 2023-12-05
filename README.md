@@ -63,6 +63,7 @@ This is a Twitter Clone built with NextJS and Tailwind. Mainly created this proj
 
 ### Built With
 
+* [![Typescript][Typescript]][Typescript-url]
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
 * [![PostgreSql][PostgreSql]][PostgreSql-url]
@@ -177,6 +178,9 @@ Project Link: https://github.com/Aking16/z-platform
 [linkedin-url]: https://www.linkedin.com/in/amirhossein-amiri016/
 
 [website-screenshot]: preview.png
+
+[Typescript]: https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff&style=for-the-badge
+[Typescript-url]: https://typescriptlang.org/
 
 [Next.js]: https://img.shields.io/badge/Next-000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
