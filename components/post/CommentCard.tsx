@@ -1,14 +1,10 @@
 "use client";
 
-import React, { useCallback, useMemo } from 'react'
-import Avatar from '../Avatar';
-import useCurrentUser from '@/hooks/useCurrentUser';
-import { Separator } from '../ui/separator';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { useRouter } from 'next/navigation';
-import { Button } from '../ui/button';
-import { Heart, MessageCircle, Reply } from 'lucide-react';
-import useLike from '@/hooks/useLike';
+import React, { useCallback, useMemo } from 'react';
+import Avatar from '@/components/Avatar';
+import { Separator } from '@/components/ui/separator';
 
 interface CommentCardProps {
     data: Record<string, any>;

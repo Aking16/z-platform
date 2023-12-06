@@ -5,8 +5,7 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import { Heart, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useMemo } from 'react';
-import Avatar from '../Avatar';
-import { Separator } from '../ui/separator';
+import Avatar from '@/components/Avatar';
 
 interface PostCardProps {
     data: Record<string, any>;

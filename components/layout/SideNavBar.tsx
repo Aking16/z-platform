@@ -21,8 +21,8 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
-import Avatar from "../Avatar";
-import { PostForm } from "../forms/PostForm";
+import Avatar from "@/components/Avatar";
+import { PostForm } from "@/components/forms/PostForm";
 
 interface SideNavBarProps {
     routes: {

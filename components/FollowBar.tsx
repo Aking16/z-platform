@@ -1,6 +1,6 @@
 import useUsers from '@/hooks/useUsers';
 import { Loader2 } from 'lucide-react';
-import Avatar from './Avatar';
+import Avatar from '@/components/Avatar';
 
 export default function FollowBar() {
   const { data: users = [], isLoading } = useUsers();

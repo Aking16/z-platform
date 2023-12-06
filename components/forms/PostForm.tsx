@@ -1,11 +1,11 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { signIn } from "next-auth/react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
+import Avatar from "@/components/Avatar"
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -14,14 +14,13 @@ import {
     FormItem,
     FormMessage
 } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
 import useCurrentUser from "@/hooks/useCurrentUser"
+import usePost from "@/hooks/usePost"
+import usePosts from "@/hooks/usePosts"
 import axios from "axios"
 import { Loader2, Smile } from "lucide-react"
 import toast from 'react-hot-toast'
-import Avatar from "../Avatar"
-import { Textarea } from "../ui/textarea"
-import usePosts from "@/hooks/usePosts"
-import usePost from "@/hooks/usePost"
 
 const FormSchema = z.object({
     post: z.string({
