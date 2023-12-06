@@ -1,5 +1,5 @@
 import usePosts from '@/hooks/usePosts';
-import PostCard from './PostCard';
+import PostCard from '@/components/post/PostCard';
 import { Loader2 } from 'lucide-react';
 
 interface PostFeedProps {

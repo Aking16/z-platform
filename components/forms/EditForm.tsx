@@ -18,9 +18,8 @@ import { Input } from "@/components/ui/input"
 import useUser from "@/hooks/useUser"
 import axios from "axios"
 import { Loader2 } from "lucide-react"
-import Image from "next/image"
 import toast from 'react-hot-toast'
-import { Textarea } from "../ui/textarea"
+import { Textarea } from "@/components/ui/textarea"
 
 const FormSchema = z.object({
     name: z.string({

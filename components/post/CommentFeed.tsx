@@ -1,6 +1,4 @@
-import usePosts from '@/hooks/usePosts';
-import PostCard from './PostCard';
-import CommentCard from './CommentCard';
+import CommentCard from '@/components/post/CommentCard';
 
 interface CommentFeedProps {
     comments?: Record<string, any>[];

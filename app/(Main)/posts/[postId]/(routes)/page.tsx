@@ -4,13 +4,10 @@ import { PostForm } from '@/components/forms/PostForm';
 import Header from '@/components/layout/Header';
 import CommentFeed from '@/components/post/CommentFeed';
 import PostCard from '@/components/post/PostCard';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import usePost from '@/hooks/usePost';
-import { ArrowLeft, Loader2 } from 'lucide-react';
-import Link from 'next/link';
+import { Loader2 } from 'lucide-react';
 import { useParams } from 'next/navigation';
-import React from 'react'
 
 const PostIdPage = () => {
     const params = useParams();
