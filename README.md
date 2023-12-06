@@ -19,8 +19,6 @@
     Twitter Clone with NextJS and Tailwind!
     <br />
     <br />
-    <a href="https://aking16.github.io/z-platform/">View Demo</a>
-    ·
     <a href="https://github.com/Aking16/z-platform/issues">Report Bug</a>    
   </p>
 </div>
