@@ -85,8 +85,8 @@ To get a local copy up and running follow these simple example steps.
 
 Create an .env file in your **root** directory and it should contain:
 ```sh
-DATABASE_URL:
-NEXT_AUTH_SECRET:
+DATABASE_URL="postgresql://postgres:USER@HOST:PORT/DATABASE?schema=YOUR_SCHEMA_NAME" #postgres
+NEXTAUTH_SECRET="NEXTAUTH_SECRET" #can be anything
 ```
 
 *This Project was made with postgres as the database, [configure Prisma](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project) if you plan to use a different database*
