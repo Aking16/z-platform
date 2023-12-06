@@ -1,4 +1,6 @@
+import Avatar from "@/components/Avatar";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { PostForm } from "@/components/forms/PostForm";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -15,14 +17,12 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { Dot, Feather, MoreHorizontal, MoreVertical } from "lucide-react";
+import { Dot, Feather, MoreHorizontal } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
-import Avatar from "@/components/Avatar";
-import { PostForm } from "@/components/forms/PostForm";
 
 interface SideNavBarProps {
     routes: {
