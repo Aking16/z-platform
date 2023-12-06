@@ -10,7 +10,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Aking16/z-platform">
-    <img src="z1.svg" alt="Logo">
+    <img src="z.svg" alt="Logo">
   </a>
 
   <h3 align="center">Z Platform</h3>
