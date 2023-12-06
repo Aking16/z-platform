@@ -16,14 +16,27 @@ const SideBarLeft = () => {
                 <FollowBar />
             </div>
 
-            <div className="flex flex-col px-5 py-2 bg-background rounded-2xl mt-5">
-                <h2 className="text-xl text-center">Made by Amirhossein Amiri</h2>
-                <p className="text-lg text-right mt-4">این پروژه برای درس توسعه وب طراحی شده است</p>
-                <p className="text-lg text-justify mb-2">This project was made for the Web Development.</p>
-                <Button className="my-2 w-fit px-10 py-0">
+            <ul className="flex flex-col list-disc px-5 py-2 bg-background rounded-2xl mt-5">
+                <h2 className="text-xl text-center">Made by
+                    <a href="https://github.com/Aking16" 
+                    target="_blank" 
+                    className="ms-1 text-secondary hover:text-secondary/80">
+                        Amirhossein Amiri
+                    </a>
+                </h2>
+                <h3 className="text-lg mt-4">Built With:</h3>
+                <li className="text-md text-muted-foreground ms-4">TypeScript</li>
+                <li className="text-md text-muted-foreground ms-4">NextJS</li>
+                <li className="text-md text-muted-foreground ms-4">React</li>
+                <li className="text-md text-muted-foreground ms-4">PostgreSQL</li>
+                <li className="text-md text-muted-foreground ms-4">Prisma</li>
+                <li className="text-md text-muted-foreground ms-4">Bcrypt</li>
+                <li className="text-md text-muted-foreground ms-4">Tailwind</li>
+                <li className="text-md text-muted-foreground ms-4 mb-2">ShadcnUI</li>
+                <Button className="my-2 px-10 py-0">
                     Github
                 </Button>
-            </div>
+            </ul>
         </aside>
     )
 }

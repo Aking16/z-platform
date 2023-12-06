@@ -7,7 +7,7 @@ const UserHero = ({ userId }: { userId: string }) => {
 
   return (
     <div>
-      <div className="bg-[#333639] h-[12.5rem] relative">
+      <div className="bg-gradient-to-t from-sky-500 to-sky-300 h-[12.5rem] relative dark:from-neutral-700 dark:to-neutral-500">
         {fetchedUser?.coverImage && (
           <Image src={fetchedUser.coverImage} fill alt="Cover Image" style={{ objectFit: 'contain' }} />
         )}

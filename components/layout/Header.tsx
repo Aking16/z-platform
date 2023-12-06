@@ -12,7 +12,7 @@ const Header: React.FC<HeaderProps> = ({ title, backArrow, center, hasBorder }) 
     return (
         <div className={`flex pb-3 sticky top-0 pt-2 bg-primary/10 z-50 backdrop-blur-sm ${center && "justify-center"} ${hasBorder && "border-b"}`}>
             {backArrow &&
-                <Link href="/home" className="text-white ms-1 p-2 rounded-full hover:bg-primary-foreground/10" >
+                <Link href="/home" className="text-secondary ms-1 p-2 rounded-full hover:bg-primary-foreground/10 dark:text-white" >
                     <ArrowLeft size={20} />
                 </Link>
             }

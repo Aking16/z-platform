@@ -5,10 +5,12 @@ import { Loader2, X } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { Button } from './ui/button';
+import { useTheme } from 'next-themes';
 
 const NotificationFeed = () => {
     const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
     const { data: fetchedNotifications = [], mutate: mutateNotification, isLoading } = useNotifications(currentUser?.id);
+    const { theme } = useTheme();
 
     useEffect(() => {
         mutateCurrentUser();
@@ -40,7 +42,11 @@ const NotificationFeed = () => {
         <div className="flex flex-col">
             {fetchedNotifications.map((notification: Record<string, any>) => (
                 <div key={notification.id} className="flex flex-row items-center p-6 gap-4 border-b-[1px] border-border">
-                    <Image priority src={"/z.svg"} alt="Z logo" width={35} height={35} />
+                    {theme === "dark" ?
+                        <Image priority src={"/z-dark.svg"} alt="Z logo" width={35} height={35} />
+                        :
+                        <Image priority src={"/z-light.svg"} alt="Z logo" width={35} height={35} />
+                    }
                     <p>
                         {notification.body}
                     </p>
@@ -49,7 +55,7 @@ const NotificationFeed = () => {
                         size="sm"
                         className="ms-auto hover:text-white hover:bg-destructive hover:border-destructive"
                         onClick={() => HandleDelete(notification.id)}>
-                        <X size={16}/>
+                        <X size={16} />
                     </Button>
                 </div>
             ))}

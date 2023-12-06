@@ -1,31 +1,31 @@
 "use client"
 
-import Image from 'next/image';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+  DialogTrigger
+} from "@/components/ui/dialog";
 
 import { LoginForm } from '@/components/forms/LoginForm';
 import { SignUpForm } from '@/components/forms/SignUpForm';
-import prismadb from '@/lib/prismadb';
+import { useTheme } from 'next-themes';
 
 const RootPage = () => {
   const session = useSession();
   const router = useRouter();
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (session?.status === "authenticated") {
-      router.push('/home')      
+      router.push('/home')
     }
   }, [session?.status, router])
 
@@ -47,7 +47,11 @@ const RootPage = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="flex justify-center items-center !mt-[-1rem]">
-              <Image src="/z.svg" alt="Z Logo" width={40} height={40} />
+              {theme === "dark" ?
+                <Image priority src={"/z-dark.svg"} alt="Z logo" width={40} height={40} />
+                :
+                <Image priority src={"/z-light.svg"} alt="Z logo" width={40} height={40} />
+              }
             </DialogTitle>
           </DialogHeader>
           <SignUpForm />
@@ -69,7 +73,11 @@ const RootPage = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="flex justify-center items-center !mt-[-1rem]">
-              <Image src="/z.svg" alt="Z Logo" width={40} height={40} />
+              {theme === "dark" ?
+                <Image priority src={"/z-dark.svg"} alt="Z logo" width={40} height={40} />
+                :
+                <Image priority src={"/z-light.svg"} alt="Z logo" width={40} height={40} />
+              }
             </DialogTitle>
           </DialogHeader>
           <LoginForm />

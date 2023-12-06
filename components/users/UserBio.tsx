@@ -16,8 +16,10 @@ import {
 import Image from "next/image";
 import { EditForm } from "../forms/EditForm";
 import useFollow from "@/hooks/useFollow";
+import { useTheme } from "next-themes";
 
 const UserBio = ({ userId }: { userId: string }) => {
+  const { theme } = useTheme();
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedUser } = useUser(userId);
   const { isFollowing, toggleFollow } = useFollow(userId);
@@ -32,17 +34,21 @@ const UserBio = ({ userId }: { userId: string }) => {
 
 
   return (
-    <div className="border-b-2 pb-5">
+    <div className="border-b pb-5">
       <div className="flex justify-end m-5">
         {currentUser?.id === userId ?
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline" size={"md"}>Set up Profile</Button>
+              <Button variant={`${theme === "light" ? "default" : "outline"}`} size={"md"}>Set up Profile</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle className="flex justify-center items-center !mt-[-1rem]">
-                  <Image src="/z.svg" alt="Z Logo" width={40} height={40} />
+                  {theme === "light" ?
+                    <Image priority src={"/z-light.svg"} alt="Z logo" width={40} height={40} className="ms-2 hover:bg-primary-foreground/10 rounded-full mt-3" />
+                    :
+                    <Image priority src={"/z-dark.svg"} alt="Z logo" width={40} height={40} className="ms-2 hover:bg-primary-foreground/10 rounded-full mt-3" />
+                  }
                 </DialogTitle>
               </DialogHeader>
               <EditForm userId={userId} />
@@ -51,9 +57,9 @@ const UserBio = ({ userId }: { userId: string }) => {
           :
           <Button
             onClick={toggleFollow}
-            variant="outline"
+            variant={`${theme === "light" ? "default" : "outline"}`}
             size={"md"}
-            className={isFollowing || `bg-white text-black hover:text-white`}>
+            className={isFollowing || `dark:bg-white dark:text-black dark:hover:bg-white/80`}>
             {isFollowing ? "Unfollow" : "Follow"}
           </Button>
         }
