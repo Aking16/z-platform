@@ -3,6 +3,35 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
 
+/**
+ * @swagger
+ * /api/posts:
+ *   post:
+ *     tags: 
+ *       - posts
+ *     summary: Create a post
+ *     description: Creates a post, requires the user to be logged in!
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               body:
+ *                 type: string
+ *                 example: Hello World!
+ *     responses:
+ *       '200':
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/post'
+ *         description: Returns created post
+ */
+
 export async function POST(request: NextRequest) {
     try {
         const session = await getServerSession(authOptions)
@@ -35,6 +64,25 @@ export async function POST(request: NextRequest) {
         return new NextResponse("Internal Error", { status: 500 })
     }
 }
+
+/**
+ * @swagger
+ * /api/posts:
+ *   get:
+ *     tags: 
+ *       - posts
+ *     summary: Fetch posts
+ *     description: Fetches a single post if provided with UserID, if not, it will fetch everything.
+ *     responses:
+ *       '200':
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/post'
+ *         description: Returns fetched post
+ */
 
 export async function GET(request: NextRequest) {
     try {

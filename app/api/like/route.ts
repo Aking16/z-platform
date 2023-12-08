@@ -3,6 +3,35 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 
+/**
+ * @swagger
+ * /api/like:
+ *   post:
+ *     tags: 
+ *       - posts
+ *     summary: Likes a post
+ *     description: Likes a user!
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               postId:
+ *                 type: string
+ *                 example: 65bf142c-1016-4a3a-912f-bb48458845ae
+ *     responses:
+ *       '200':
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/post'
+ *         description: Returns updated post
+ */
+
 export async function POST(request: NextRequest) {
     try {
         const { postId } = await request.json();
@@ -83,6 +112,35 @@ export async function POST(request: NextRequest) {
         return new NextResponse("Internal Error", { status: 500 })
     }
 }
+
+/**
+ * @swagger
+ * /api/like:
+ *   delete:
+ *     tags: 
+ *       - posts
+ *     summary: Unlikes a post
+ *     description: Unlikes a user!
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               postId:
+ *                 type: string
+ *                 example: 65bf142c-1016-4a3a-912f-bb48458845ae
+ *     responses:
+ *       '200':
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/post'
+ *         description: Returns updated post
+ */
 
 export async function DELETE(request: NextRequest) {
     try {

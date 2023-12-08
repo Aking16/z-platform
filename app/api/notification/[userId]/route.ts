@@ -1,6 +1,32 @@
 import prismadb from "@/lib/prismadb";
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * @swagger
+ * /api/notification/[userId]:
+ *   get:
+ *     tags: 
+ *       - notification
+ *     summary: Fetch notifications
+ *     description: Fetches notifications then updates user hasNotification to false
+ *     parameters:
+ *       - in: json
+ *         name: userId
+ *         description: ID of the user.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/notification'
+ *         description: Returns fetched notifications
+ */
+
 export async function GET(request: NextRequest, { params }: { params: { userId: string } }) {
     try {
         const userId = params.userId;
@@ -33,6 +59,36 @@ export async function GET(request: NextRequest, { params }: { params: { userId: 
         return new NextResponse("Internal Error", { status: 500 })
     }
 }
+
+/**
+ * @swagger
+ * /api/notification/[userId]?notifId=ID:
+ *   delete:
+ *     tags: 
+ *       - notification
+ *     summary: Deletes a notification
+ *     description: Fetches notifications then updates user hasNotification to false
+ *     parameters:
+ *       - in: json
+ *         name: userId
+ *         description: ID of the user.
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: json
+ *         name: notifId
+ *         description: ID of the notification.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         content:
+ *           application/json:
+ *             schema:
+ *              type: string
+ *              example: Notification Deleted
+ */
 
 export async function DELETE(request: NextRequest) {
     try {

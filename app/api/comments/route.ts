@@ -3,6 +3,36 @@ import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
 import prismadb from "@/lib/prismadb";
 
+
+/**
+ * @swagger
+ * /api/comments?postId=ID:
+ *   post:
+ *     tags: 
+ *       - posts
+ *     summary: Comments on a post
+ *     description: Comments on a post!
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               post:
+ *                 type: string
+ *                 example: "Hello World!"
+ *     responses:
+ *       '200':
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/comment'
+ *         description: Returns comment
+ */
+
 export async function POST(request: NextRequest) {
     try {
         const { post } = await request.json();

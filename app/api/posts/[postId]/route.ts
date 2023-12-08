@@ -1,6 +1,32 @@
 import prismadb from "@/lib/prismadb";
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * @swagger
+ * /api/posts/[postId]:
+ *   get:
+ *     tags: 
+ *       - posts
+ *     summary: Fetch a post
+ *     description: Fetches a single post, used when clicking on a post.
+ *     parameters:
+ *       - in: json
+ *         name: postId
+ *         description: ID of the post.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/post'
+ *         description: Returns fetched post
+ */
+
 export async function GET(request: NextRequest, { params }: { params: { postId: string } }) {
     try {
         const postId = params.postId;

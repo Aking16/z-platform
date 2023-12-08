@@ -6,6 +6,44 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 import prismadb from "@/lib/prismadb";
 
+/**
+ * @swagger
+ * /api/edit:
+ *   patch:
+ *     tags: 
+ *       - users
+ *     summary: Edits a user
+ *     description: Edits a user!
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               profileImage:
+ *                 type: string
+ *                 format: binary
+ *               coverImage:
+ *                 type: string
+ *                 format: binary
+ *               name:
+ *                 type: string
+ *               username:
+ *                 type: string
+ *               bio:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/user'
+ *         description: Returns updated user
+ */
+
 export async function PATCH(req: NextRequest) {
     try {
         const session = await getServerSession(authOptions);

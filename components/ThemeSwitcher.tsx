@@ -1,5 +1,4 @@
 "use client"
-
 import {
     Select,
     SelectContent,
@@ -11,7 +10,7 @@ import { MoonStar, Sun, SunMoon } from "lucide-react"
 import { useTheme } from "next-themes"
 
 export function ThemeSwitcher() {
-    const { theme, setTheme } = useTheme()
+    const { theme, setTheme } = useTheme();
 
     return (
         <Select defaultValue={theme} onValueChange={(value: string) => setTheme(value)}>

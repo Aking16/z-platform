@@ -3,6 +3,32 @@ import prismadb from "@/lib/prismadb";
 import { NextRequest, NextResponse } from "next/server";
 import { NextApiRequest } from "next";
 
+/**
+ * @swagger
+ * /api/users/[userId]:
+ *   get:
+ *     tags: 
+ *       - users
+ *     summary: Fetches selected user
+ *     description: Fetches selected user, used for profile!
+ *     parameters:
+ *       - in: json
+ *         name: userId
+ *         description: ID of the user.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/user'
+ *         description: Returns users
+ */
+
 export async function GET(request: NextApiRequest, { params }: { params: { userId: string } }) {
     try {
         const userId = params.userId;
