@@ -76,8 +76,10 @@ export function PostForm({ placeHolder, isComment, postId }: PostFormProps) {
 
     const handleEmojiSelect = (emoji: any, text: string) => {
         const emojiNative = emoji.native;
-        setSelectedEmoji((prevSelectedEmoji) => (prevSelectedEmoji || '') + emojiNative);
-        form.setValue('post', selectedEmoji || '');
+        const newSelectedEmoji = (selectedEmoji || '') + emojiNative;
+
+        setSelectedEmoji(newSelectedEmoji);
+        form.setValue('post', newSelectedEmoji);
     };
 
     return (

@@ -77,9 +77,9 @@ const SideNavBar: React.FC<SideNavBarProps> = ({ routes }) => {
 
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button className="flex justify-center mt-auto mb-5 p-0 lg:justify-start" variant="secondary">
+                    <Button className="flex justify-center mt-auto mb-5 px-1 lg:justify-start" variant="secondary">
                         <Avatar hasBorder userId={currentUser?.id} />
-                        <div className="hidden flex-col text-start xl:flex sr">
+                        <div className="hidden flex-col text-start xl:flex">
                             <span className="ms-2">{currentUser?.name}</span>
                             <span className="ms-2 text-muted">@{currentUser?.username}</span>
                         </div>
