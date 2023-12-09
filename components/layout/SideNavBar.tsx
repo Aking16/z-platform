@@ -38,7 +38,7 @@ const SideNavBar: React.FC<SideNavBarProps> = ({ routes }) => {
     const { theme } = useTheme()
 
     return (
-        <aside className="flex flex-col h-screen sticky top-0 gap-y-5 pe-4 xl:pe-8">
+        <nav className="flex flex-col h-screen sticky top-0 gap-y-5 pe-4 xl:pe-8">
             {theme === "light" ?
                 <Image priority src={"/z-light.svg"} alt="Z logo" width={40} height={40} className="ms-2 hover:bg-primary-foreground/10 rounded-full mt-3" />
                 :
@@ -102,7 +102,7 @@ const SideNavBar: React.FC<SideNavBarProps> = ({ routes }) => {
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
-        </aside >
+        </nav >
     )
 }
 
