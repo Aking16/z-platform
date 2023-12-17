@@ -66,6 +66,7 @@ This is a Twitter Clone built with NextJS and Tailwind. Mainly created this proj
 * [![React][React.js]][React-url]
 * [![PostgreSql][PostgreSql]][PostgreSql-url]
 * [![Prisma ORM][Prisma]][Prisma-url]
+* [![SwaggerUI][SwaggerUI]][Swagger-url]
 * [![Bcrypt][Bcrypt]][Bcrypt-url]
 * [![Tailwind][Tailwind.css]][Tailwind-url]
 * [![Shadcn][Shadcn]][Shadcn-url]
@@ -197,6 +198,9 @@ Project Link: https://github.com/Aking16/z-platform
 
 [Prisma]: https://img.shields.io/badge/Prisma-2D3748?logo=prisma&logoColor=fff&style=for-the-badge
 [Prisma-url]: https://prisma.io
+
+[SwaggerUI]: https://img.shields.io/badge/Swagger-85EA2D?logo=swagger&logoColor=000&style=for-the-badge
+[Swagger-url]: https://swagger.io
 
 
 [Bcrypt]: https://img.shields.io/badge/Bcrypt-CA4245?style=for-the-badge&logo=react&logoColor=white
