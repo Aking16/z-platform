@@ -17,6 +17,8 @@ import Image from "next/image";
 import { EditForm } from "../forms/EditForm";
 import useFollow from "@/hooks/useFollow";
 import { useTheme } from "next-themes";
+import { ProfileImageForm } from "../forms/ProfileImageForm";
+import { ScrollArea } from "../ui/scroll-area";
 
 const UserBio = ({ userId }: { userId: string }) => {
   const { theme } = useTheme();
@@ -51,7 +53,9 @@ const UserBio = ({ userId }: { userId: string }) => {
                   }
                 </DialogTitle>
               </DialogHeader>
-              <EditForm userId={userId} />
+              <ScrollArea className="h-[24rem] md:h-full">
+                <EditForm userId={userId} />
+              </ScrollArea>
             </DialogContent>
           </Dialog>
           :

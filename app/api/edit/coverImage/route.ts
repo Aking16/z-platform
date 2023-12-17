@@ -1,7 +1,10 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import prismadb from "@/lib/prismadb";
+import { existsSync } from "fs";
+import fs from "fs/promises";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
+import prismadb from "@/lib/prismadb";
 
 /**
  * @swagger
@@ -46,14 +49,13 @@ export async function PATCH(req: NextRequest) {
         const session = await getServerSession(authOptions);
         const formData = await req.formData();
 
-        let urlPI = await req.url;
-        let urlCI = await req.url;
-        urlPI = urlPI.split('api')[0] + "upload/profile-images/"
-        urlCI = urlCI.split('api')[0] + "upload/cover-images/"
+        const urlCI = await req.url.split('api')[0] + "upload/cover-images/"
 
-        const name = formData.get("name")?.toString();
-        const username = formData.get("username")?.toString();
-        const bio = formData.get("bio")?.toString();
+        const coverImage = formData.get("coverImage");
+
+        if (!coverImage) {
+            return NextResponse.json("File Not Found", { status: 400 });
+        }
 
         if (!session?.user?.email) {
             return new NextResponse("Unauthorized", { status: 401 })
@@ -69,14 +71,27 @@ export async function PATCH(req: NextRequest) {
             return new NextResponse("Missing Info", { status: 400 })
         }
 
+        const coverImageFile = coverImage as File;
+
+        const coverImageDir = path.join(process.cwd(), "public/upload/cover-images");
+
+        const coverImageFileArrayBuffer = await coverImageFile.arrayBuffer();
+
+        if (!existsSync(coverImageDir)) {
+            fs.mkdir(coverImageDir, { recursive: true });
+        }
+
+        await fs.writeFile(
+            path.join(coverImageDir, coverImageFile.name),
+            Buffer.from(coverImageFileArrayBuffer),
+        );
+
         const updatedUser = await prismadb.user.update({
             where: {
                 id: currentUser.id
             },
             data: {
-                name,
-                username,
-                bio,
+                coverImage: urlCI + coverImageFile.name
             }
         })
 

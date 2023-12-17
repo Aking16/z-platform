@@ -2,31 +2,27 @@
 
 import Image from "next/image";
 
-import useUser from "@/hooks/useUser";
-import { useRouter } from "next/navigation";
-import { ProfileImageForm } from "./forms/ProfileImageForm";
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { useTheme } from "next-themes";
-import { useState } from "react";
+    DialogTitle
+} from "@/components/ui/dialog";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import useUser from "@/hooks/useUser";
 import { Edit } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { CoverImageForm } from "./forms/CoverImageForm";
 
-interface AvatarProps {
+interface HeroProps {
     userId: string;
-    isLarge?: boolean;
-    hasBorder?: boolean;
     src?: string;
     editable?: boolean;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder, src, editable }) => {
+const Hero: React.FC<HeroProps> = ({ userId, src, editable }) => {
     const { theme } = useTheme();
     const router = useRouter();
     const { data: fetchedUser } = useUser(userId);
@@ -38,8 +34,6 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder, src, editab
             if (userId == currentUser.id) {
                 setOpen(true);
             }
-        } else {
-            router.push(`/users/${userId}`);
         }
     }
 
@@ -48,24 +42,23 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder, src, editab
 
         if (src) {
             source = src;
-        } else if (fetchedUser?.profileImage) {
-            source = fetchedUser?.profileImage;
-        } else {
-            source = '/avatars/placeholder.png'
+        } else if (fetchedUser?.coverImage) {
+            source = fetchedUser?.coverImage;
         }
-
         return source;
     }
 
     return (
         <>
-            <div className={`${hasBorder ? 'border-4 border-secondary dark:border-black' : ''} ${isLarge ? 'h-32' : 'h-12'} ${isLarge ? 'w-32' : 'w-12'} group rounded-full hover:opacity-90 transition cursor-pointer relative`}>
-                <Image
-                    fill
-                    alt="Avatar"
-                    onClick={onClick}
-                    src={imageSrc()}
-                    className="object-cover rounded-full" />
+            <div className={`${editable && "cursor-pointer"} w-full h-full group relative`}>
+                {fetchedUser.coverImage &&
+                    <Image
+                        fill
+                        alt="Cover Image"
+                        src={imageSrc()}
+                        onClick={onClick}
+                        style={{ objectFit: 'contain' }} />
+                }
 
                 {editable && userId == currentUser.id &&
                     <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-primary/60 rounded-full p-2 invisible group-hover:visible">
@@ -85,11 +78,11 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder, src, editab
                             }
                         </DialogTitle>
                     </DialogHeader>
-                    <ProfileImageForm userId={userId} />
+                    <CoverImageForm userId={userId} />
                 </DialogContent>
             </Dialog>
         </>
     );
 }
 
-export default Avatar;
+export default Hero;

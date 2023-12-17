@@ -42,26 +42,15 @@ const FormSchema = z.object({
 export function EditForm({ userId }: { userId: string }) {
     const { data: fetchedUser, mutate: mutateUser } = useUser(userId);
     const [loading, setLoading] = useState(false);
-    const [profileImage, setprofileImage] = useState<File>()
-    const [coverImage, setCoverImage] = useState<File>()
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
     })
 
     function onSubmit(values: z.infer<typeof FormSchema>) {
-        const data = new FormData()
-        if (profileImage && coverImage) {
-            data.append('name', values.name)
-            data.append('username', values.username)
-            data.append('bio', values.bio)
-            data.append('profileImage', profileImage)
-            data.append('coverImage', coverImage)
-        }
-
         setLoading(true);
 
-        axios.patch('/api/edit', data, { headers: { "Content-Type": "multipart/form-data" } }).then(() => {
+        axios.patch('/api/edit', values).then(() => {
             toast.success("Account Edited!", { style: { color: "#fff", background: "#000" } });
             mutateUser();
         }).catch(() => {
@@ -73,12 +62,12 @@ export function EditForm({ userId }: { userId: string }) {
     return (
         <Form {...form}>
             {loading ?
-                <div className="flex justify-center items-center h-[24.5rem]">
+                <div className="flex justify-center items-center h-[24rem]">
                     <Loader2 className="animate-spin me-2 text-secondary" />
                     loading
                 </div>
                 :
-                <form onSubmit={form.handleSubmit(onSubmit)} className="px-[5rem]">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="md:px-[5rem]">
                     <h2 className="text-3xl font-bold mt-2">
                         Edit your profile!
                     </h2>
@@ -125,34 +114,8 @@ export function EditForm({ userId }: { userId: string }) {
                             </FormItem>
                         )}
                     />
-                    <FormField
-                        control={form.control}
-                        name="profileImage"
-                        render={({ field }) => (
-                            <FormItem className="mt-5">
-                                <FormLabel className="text-slate-400">Profile Image</FormLabel>
-                                <FormControl>
-                                    <Input type="file" {...field} className="bg-primary border rounded-sm focus:border-secondary focus-visible:ring-0" onChange={(e) => setprofileImage(e.target.files?.[0])} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="coverImage"
-                        render={({ field }) => (
-                            <FormItem className="mt-5">
-                                <FormLabel className="text-slate-400">Cover Image</FormLabel>
-                                <FormControl>
-                                    <Input type="file" {...field} className="bg-primary border rounded-sm focus:border-secondary focus-visible:ring-0" onChange={(e) => setCoverImage(e.target.files?.[0])} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
 
-                    <Button type="submit" className="mt-20 w-full" disabled={loading}>Next</Button>
+                    <Button type="submit" className="mt-10 w-full" disabled={loading}>Next</Button>
                 </form>
             }
         </Form>
