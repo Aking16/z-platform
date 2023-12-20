@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { useTheme } from 'next-themes';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -16,7 +17,7 @@ import {
 
 import { LoginForm } from '@/components/forms/LoginForm';
 import { SignUpForm } from '@/components/forms/SignUpForm';
-import { useTheme } from 'next-themes';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const RootPage = () => {
   const session = useSession();
@@ -27,11 +28,11 @@ const RootPage = () => {
     if (session?.status === "authenticated") {
       router.push('/home')
     }
-  }, [session?.status, router])
+  }, [router, session?.status])
 
 
   return (
-    <main>
+    <section>
       <h1 className="text-6xl font-bold">
         Happening now
       </h1>
@@ -54,10 +55,12 @@ const RootPage = () => {
               }
             </DialogTitle>
           </DialogHeader>
-          <SignUpForm />
+          <ScrollArea className="h-[24rem] md:h-full">
+            <SignUpForm />
+          </ScrollArea>
         </DialogContent>
       </Dialog>
-      <p className="w-[19rem] text-xs leading-none mt-2">
+      <p className="text-xs leading-none mt-2 md:w-[19rem]">
         By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use.
       </p>
 
@@ -66,7 +69,7 @@ const RootPage = () => {
       </h3>
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="w-[19rem] mt-4" variant="outline">
+          <Button className="w-[19rem] my-4" variant="outline">
             Sign In
           </Button>
         </DialogTrigger>
@@ -80,10 +83,12 @@ const RootPage = () => {
               }
             </DialogTitle>
           </DialogHeader>
-          <LoginForm />
+          <ScrollArea className="h-[24rem] md:h-full">
+            <LoginForm />
+          </ScrollArea>
         </DialogContent>
       </Dialog>
-    </main>
+    </section>
   )
 }
 

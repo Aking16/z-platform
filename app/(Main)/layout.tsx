@@ -1,5 +1,7 @@
 "use client"
 
+import BottomNavigation from "@/components/layout/BottomNavigation";
+import HamBurgerMenu from "@/components/layout/HamBurgerMenu";
 import SideBarLeft from "@/components/layout/SideBarLeft";
 import SideNavBar from "@/components/layout/SideNavBar";
 import { Container } from "@/components/ui/container";
@@ -28,11 +30,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
   ]
   return (
-    <Container>
+    <Container mobileResponsive>
       <main className="flex justify-between">
         <SideNavBar routes={routes} />
+        <BottomNavigation routes={routes} />
+        <HamBurgerMenu routes={routes} />
 
-        <section className="pt-1 w-full border-x border-border ">
+        <section className="pt-1 w-full md:border-x border-border">
           {children}
         </section>
 

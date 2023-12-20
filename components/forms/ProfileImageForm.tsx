@@ -71,7 +71,7 @@ export function ProfileImageForm({ userId }: { userId: string }) {
                     loading
                 </div>
                 :
-                <form onSubmit={form.handleSubmit(onSubmit)} className="px-[5rem]">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="md:px-[5rem]">
                     <h2 className="text-3xl font-bold mt-2">
                         Edit your profile!
                     </h2>

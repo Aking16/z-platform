@@ -1,24 +1,22 @@
-import { useMemo } from "react";
 import { format } from "date-fns";
+import { useMemo } from "react";
 
-import useCurrentUser from "@/hooks/useCurrentUser";
-import useUser from "@/hooks/useUser";
-import { Button } from "../ui/button";
-import { CalendarDays } from "lucide-react";
+import { EditForm } from "@/components/forms/EditForm";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import Image from "next/image";
-import { EditForm } from "../forms/EditForm";
+  DialogTrigger
+} from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import useCurrentUser from "@/hooks/useCurrentUser";
 import useFollow from "@/hooks/useFollow";
+import useUser from "@/hooks/useUser";
+import { CalendarDays } from "lucide-react";
 import { useTheme } from "next-themes";
-import { ProfileImageForm } from "../forms/ProfileImageForm";
-import { ScrollArea } from "../ui/scroll-area";
+import Image from "next/image";
 
 const UserBio = ({ userId }: { userId: string }) => {
   const { theme } = useTheme();
@@ -54,7 +52,7 @@ const UserBio = ({ userId }: { userId: string }) => {
                 </DialogTitle>
               </DialogHeader>
               <ScrollArea className="h-[24rem] md:h-full">
-                <EditForm userId={userId} />
+                  <EditForm userId={userId} />
               </ScrollArea>
             </DialogContent>
           </Dialog>

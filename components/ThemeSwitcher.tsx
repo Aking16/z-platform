@@ -9,12 +9,16 @@ import {
 import { MoonStar, Sun, SunMoon } from "lucide-react"
 import { useTheme } from "next-themes"
 
-export function ThemeSwitcher() {
+interface ThemeSwitcherProps {
+    forMenu?: boolean
+}
+
+export function ThemeSwitcher({ forMenu }: ThemeSwitcherProps) {
     const { theme, setTheme } = useTheme();
 
     return (
         <Select defaultValue={theme} onValueChange={(value: string) => setTheme(value)}>
-            <SelectTrigger>
+            <SelectTrigger className={`${forMenu ? "w-fit gap-x-4 border p-2" : "w-full"}`}>
                 <SelectValue placeholder="Theme" className="flex" />
             </SelectTrigger>
             <SelectContent side="top">

@@ -1,6 +1,8 @@
 "use client"
 
 import Image from "next/image";
+import { useTheme } from "next-themes";
+import { useState } from "react";
 
 import {
     Dialog,
@@ -11,10 +13,8 @@ import {
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useUser from "@/hooks/useUser";
 import { Edit } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { CoverImageForm } from "./forms/CoverImageForm";
+import { CoverImageForm } from "@/components/forms/CoverImageForm";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface HeroProps {
     userId: string;
@@ -24,15 +24,14 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ userId, src, editable }) => {
     const { theme } = useTheme();
-    const router = useRouter();
     const { data: fetchedUser } = useUser(userId);
     const { data: currentUser } = useCurrentUser();
     const [open, setOpen] = useState(false);
 
     function onClick() {
         if (editable) {
-            if (userId == currentUser.id) {
-                setOpen(true);
+            if (currentUser?.id === userId) {
+                setOpen((prev) => !prev);
             }
         }
     }
@@ -60,7 +59,7 @@ const Hero: React.FC<HeroProps> = ({ userId, src, editable }) => {
                         style={{ objectFit: 'contain' }} />
                 }
 
-                {editable && userId == currentUser.id &&
+                {editable && currentUser?.id === userId &&
                     <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-primary/60 rounded-full p-2 invisible group-hover:visible">
                         <Edit size={24} className="text-primary-foreground" />
                     </div>
@@ -78,7 +77,9 @@ const Hero: React.FC<HeroProps> = ({ userId, src, editable }) => {
                             }
                         </DialogTitle>
                     </DialogHeader>
-                    <CoverImageForm userId={userId} />
+                    <ScrollArea className="h-[24rem] md:h-full">
+                        <CoverImageForm userId={userId} />
+                    </ScrollArea>
                 </DialogContent>
             </Dialog>
         </>

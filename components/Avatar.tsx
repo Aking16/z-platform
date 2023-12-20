@@ -1,22 +1,21 @@
 "use client"
 
 import Image from "next/image";
-
-import useUser from "@/hooks/useUser";
+import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-import { ProfileImageForm } from "./forms/ProfileImageForm";
+import { useState } from "react";
+
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { useTheme } from "next-themes";
-import { useState } from "react";
+    DialogTitle
+} from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import useUser from "@/hooks/useUser";
 import { Edit } from "lucide-react";
+import { ProfileImageForm } from "@/components/forms/ProfileImageForm";
 
 interface AvatarProps {
     userId: string;
@@ -35,8 +34,8 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder, src, editab
 
     function onClick() {
         if (editable) {
-            if (userId == currentUser.id) {
-                setOpen(true);
+            if (currentUser?.id === userId) {
+                setOpen((prev) => !prev);
             }
         } else {
             router.push(`/users/${userId}`);
@@ -59,7 +58,9 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder, src, editab
 
     return (
         <>
-            <div className={`${hasBorder ? 'border-4 border-secondary dark:border-black' : ''} ${isLarge ? 'h-32' : 'h-12'} ${isLarge ? 'w-32' : 'w-12'} group rounded-full hover:opacity-90 transition cursor-pointer relative`}>
+            <div className={`group rounded-full hover:opacity-90 transition cursor-pointer relative
+            ${hasBorder && 'border-4 border-secondary dark:border-black'} 
+            ${isLarge ? 'h-32' : 'h-12'} ${isLarge ? 'w-32' : 'w-12'} `}>
                 <Image
                     fill
                     alt="Avatar"
@@ -67,7 +68,7 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder, src, editab
                     src={imageSrc()}
                     className="object-cover rounded-full" />
 
-                {editable && userId == currentUser.id &&
+                {editable && currentUser?.id === userId &&
                     <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-primary/60 rounded-full p-2 invisible group-hover:visible">
                         <Edit size={24} className="text-primary-foreground" />
                     </div>
@@ -85,7 +86,9 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder, src, editab
                             }
                         </DialogTitle>
                     </DialogHeader>
-                    <ProfileImageForm userId={userId} />
+                    <ScrollArea className="h-[24rem] md:h-full">
+                        <ProfileImageForm userId={userId} />
+                    </ScrollArea>
                 </DialogContent>
             </Dialog>
         </>

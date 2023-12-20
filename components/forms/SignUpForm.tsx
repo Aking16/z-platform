@@ -62,12 +62,12 @@ export function SignUpForm() {
     return (
         <Form {...form}>
             {loading ?
-                <div className="flex justify-center items-center h-[31.5rem]">
+                <div className="flex justify-center items-center h-[24rem]">
                     <Loader2 className="animate-spin me-2 text-secondary" />
                     loading
                 </div>
                 :
-                <form onSubmit={form.handleSubmit(onSubmit)} className="px-[5rem]">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="md:px-[5rem]">
                     <h2 className="text-3xl font-bold mt-2">
                         Create your account
                     </h2>
@@ -124,7 +124,7 @@ export function SignUpForm() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className="mt-20 w-full">Next</Button>
+                    <Button type="submit" className="mt-10 w-full">Next</Button>
                 </form>
             }
         </Form>

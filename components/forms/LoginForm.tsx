@@ -58,12 +58,12 @@ export function LoginForm() {
     return (
         <Form {...form}>
             {loading ?
-                <div className="flex justify-center items-center h-[24.5rem]">
+                <div className="flex justify-center items-center h-[24rem]">
                     <Loader2 className="animate-spin me-2 text-secondary" />
                     loading
                 </div>
                 :
-                <form onSubmit={form.handleSubmit(onSubmit)} className="px-[5rem]">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="md:px-[5rem]">
                     <h2 className="text-3xl font-bold mt-2">
                         Sign in to X
                     </h2>
@@ -94,7 +94,7 @@ export function LoginForm() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className="mt-20 w-full" disabled={loading}>Next</Button>
+                    <Button type="submit" className="mt-10 w-full" disabled={loading}>Next</Button>
                 </form>
             }
         </Form>
