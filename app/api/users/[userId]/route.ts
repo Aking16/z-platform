@@ -1,7 +1,5 @@
-import bcrypt from "bcrypt"
 import prismadb from "@/lib/prismadb";
 import { NextRequest, NextResponse } from "next/server";
-import { NextApiRequest } from "next";
 
 /**
  * @swagger
@@ -29,7 +27,7 @@ import { NextApiRequest } from "next";
  *         description: Returns users
  */
 
-export async function GET(request: NextApiRequest, { params }: { params: { userId: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { userId: string } }) {
     try {
         const userId = params.userId;
 

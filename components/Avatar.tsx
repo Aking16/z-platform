@@ -3,13 +3,13 @@
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 import {
     Dialog,
     DialogContent,
     DialogHeader,
-    DialogTitle
+    DialogTitle,
+    DialogTrigger
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import useCurrentUser from "@/hooks/useCurrentUser";
@@ -30,14 +30,9 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder, src, editab
     const router = useRouter();
     const { data: fetchedUser } = useUser(userId);
     const { data: currentUser } = useCurrentUser();
-    const [open, setOpen] = useState(false);
 
     function onClick() {
-        if (editable) {
-            if (currentUser?.id === userId) {
-                setOpen((prev) => !prev);
-            }
-        } else {
+        if (!editable) {
             router.push(`/users/${userId}`);
         }
     }
@@ -57,25 +52,26 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder, src, editab
     }
 
     return (
-        <>
-            <div className={`group rounded-full hover:opacity-90 transition cursor-pointer relative
-            ${hasBorder && 'border-4 border-secondary dark:border-black'} 
-            ${isLarge ? 'h-32' : 'h-12'} ${isLarge ? 'w-32' : 'w-12'} `}>
-                <Image
-                    fill
-                    alt="Avatar"
-                    onClick={onClick}
-                    src={imageSrc()}
-                    className="object-cover rounded-full" />
+        <Dialog>
+            <DialogTrigger asChild>
+                <div className={`group rounded-full hover:opacity-90 transition cursor-pointer relative
+                ${hasBorder && 'border-4 border-secondary dark:border-black'} 
+                ${isLarge ? 'h-32' : 'h-12'} ${isLarge ? 'w-32' : 'w-12'} `}>
+                    <Image
+                        fill
+                        alt="Avatar"
+                        src={imageSrc()}
+                        onClick={onClick}
+                        className="object-cover rounded-full" />
 
-                {editable && currentUser?.id === userId &&
-                    <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-primary/60 rounded-full p-2 invisible group-hover:visible">
-                        <Edit size={24} className="text-primary-foreground" />
-                    </div>
-                }
-            </div>
-
-            <Dialog open={open} onOpenChange={setOpen}>
+                    {editable && currentUser?.id === userId &&
+                        <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-primary/60 rounded-full p-2 invisible group-hover:visible">
+                            <Edit size={24} className="text-primary-foreground" />
+                        </div>
+                    }
+                </div>
+            </DialogTrigger>
+            {editable && currentUser?.id === userId &&
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="flex justify-center items-center !mt-[-1rem]">
@@ -90,8 +86,8 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder, src, editab
                         <ProfileImageForm userId={userId} />
                     </ScrollArea>
                 </DialogContent>
-            </Dialog>
-        </>
+            }
+        </Dialog>
     );
 }
 

@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import { useState } from "react";
 
 import {
     Dialog,
     DialogContent,
     DialogHeader,
-    DialogTitle
+    DialogTitle,
+    DialogTrigger
 } from "@/components/ui/dialog";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useUser from "@/hooks/useUser";
@@ -26,15 +26,6 @@ const Hero: React.FC<HeroProps> = ({ userId, src, editable }) => {
     const { theme } = useTheme();
     const { data: fetchedUser } = useUser(userId);
     const { data: currentUser } = useCurrentUser();
-    const [open, setOpen] = useState(false);
-
-    function onClick() {
-        if (editable) {
-            if (currentUser?.id === userId) {
-                setOpen((prev) => !prev);
-            }
-        }
-    }
 
     function imageSrc() {
         let source;
@@ -48,25 +39,25 @@ const Hero: React.FC<HeroProps> = ({ userId, src, editable }) => {
     }
 
     return (
-        <>
-            <div className={`${editable && "cursor-pointer"} w-full h-full group relative`}>
-                {fetchedUser.coverImage &&
-                    <Image
-                        fill
-                        alt="Cover Image"
-                        src={imageSrc()}
-                        onClick={onClick}
-                        style={{ objectFit: 'contain' }} />
-                }
+        <Dialog>
+            <DialogTrigger asChild>
+                <div className={`${editable && "cursor-pointer"} w-full h-full group relative`}>
+                    {fetchedUser.coverImage &&
+                        <Image
+                            fill
+                            alt="Cover Image"
+                            src={imageSrc()}
+                            style={{ objectFit: 'contain' }} />
+                    }
 
-                {editable && currentUser?.id === userId &&
-                    <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-primary/60 rounded-full p-2 invisible group-hover:visible">
-                        <Edit size={24} className="text-primary-foreground" />
-                    </div>
-                }
-            </div>
-
-            <Dialog open={open} onOpenChange={setOpen}>
+                    {editable && currentUser?.id === userId &&
+                        <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-primary/60 rounded-full p-2 invisible group-hover:visible">
+                            <Edit size={24} className="text-primary-foreground" />
+                        </div>
+                    }
+                </div>
+            </DialogTrigger>
+            {editable && currentUser?.id === userId &&
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="flex justify-center items-center !mt-[-1rem]">
@@ -81,8 +72,8 @@ const Hero: React.FC<HeroProps> = ({ userId, src, editable }) => {
                         <CoverImageForm userId={userId} />
                     </ScrollArea>
                 </DialogContent>
-            </Dialog>
-        </>
+            }
+        </Dialog>
     );
 }
 

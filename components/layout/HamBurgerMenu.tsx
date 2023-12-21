@@ -1,5 +1,4 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { useTheme } from "next-themes";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -32,11 +31,10 @@ interface HamBurgerMenuProps {
 
 const HamBurgerMenu: React.FC<HamBurgerMenuProps> = ({ routes }) => {
     const { data: currentUser } = useCurrentUser();
-    const { theme } = useTheme()
 
     return (
         <Sheet>
-            <SheetTrigger className="flex fixed top-1 right-2 z-50" asChild>
+            <SheetTrigger className="flex fixed top-1 right-2 z-50 md:hidden" asChild>
                 <Button variant="secondary" >
                     <Menu size={24} />
                 </Button>

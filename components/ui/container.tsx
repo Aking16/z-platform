@@ -1,5 +1,4 @@
 import React from "react"
-import { boolean } from "zod"
 
 interface ContainerProps {
   children: React.ReactNode
@@ -14,7 +13,7 @@ export const Container: React.FC<ContainerProps> = ({ ...ContainerProps }) => {
     <div className={`${ContainerProps.flex && "flex items-center"} 
     ${ContainerProps.flexCol && "flex-col"} 
     ${ContainerProps.justifyBetween && "justify-between"}
-    ${ContainerProps.mobileResponsive ? "px-0 md:px-4" : "px-4 xl:container "}`}>
+    ${ContainerProps.mobileResponsive ? "px-0 md:px-4 xl:container" : "px-4 xl:container"}`}>
       {ContainerProps.children}
     </div>
   )
