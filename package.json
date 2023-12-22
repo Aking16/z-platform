@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prebuild": "npx prisma generate",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -59,6 +60,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
     "react-hot-toast": "^2.4.1",
+    "sharp": "^0.33.1",
     "swagger-ui-react": "^5.10.3",
     "swr": "^2.2.4",
     "tailwind-merge": "^2.0.0",

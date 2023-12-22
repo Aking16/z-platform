@@ -43,9 +43,9 @@ const NotificationFeed = () => {
             {fetchedNotifications.map((notification: Record<string, any>) => (
                 <div key={notification.id} className="flex flex-row items-center p-6 gap-4 border-b-[1px] border-border">
                     {theme === "dark" ?
-                        <Image priority src={"/z-dark.svg"} alt="Z logo" width={35} height={35} />
-                        :
                         <Image priority src={"/z-light.svg"} alt="Z logo" width={35} height={35} />
+                        :
+                        <Image priority src={"/z-dark.svg"} alt="Z logo" width={35} height={35} />
                     }
                     <p>
                         {notification.body}
