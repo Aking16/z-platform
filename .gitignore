@@ -42,4 +42,4 @@ workbox-*
 swe-worker-*
 
 #Deploy 
-# app/api-doc
+app/api-doc

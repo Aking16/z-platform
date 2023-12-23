@@ -12,13 +12,13 @@ datasource db {
 
 model User {
   id                String      @id @default(uuid())
-  name              String
-  bio               String?
+  name              String      @db.VarChar(255)
+  bio               String?     
   username          String      @unique
-  hashedPassword    String
+  hashedPassword    String      
   email             String      @unique
-  coverImage        String?
-  profileImage      String?
+  coverImage        String?     
+  profileImage      String?     
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
   followingIds      String[]   
