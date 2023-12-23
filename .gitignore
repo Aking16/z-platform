@@ -40,3 +40,6 @@ next-env.d.ts
 sw.*
 workbox-*
 swe-worker-*
+
+#Deploy 
+# app/api-doc

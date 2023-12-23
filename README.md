@@ -19,7 +19,8 @@
     Twitter Clone with NextJS and Tailwind!
     <br />
     <br />
-    <a href="https://github.com/Aking16/z-platform/issues">Report Bug</a>    
+    <a href="https://github.com/Aking16/z-platform/issues">Report Bug</a> •    
+    <a href="https://z-platform.liara.run/">Demo</a>    
   </p>
 </div>
 
@@ -41,12 +42,14 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
+    <li><a href="#deploying">Deploying</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
+
 
 
 ## About The Project
@@ -70,6 +73,7 @@ This is a Twitter Clone built with NextJS and Tailwind. Mainly created this proj
 * [![Bcrypt][Bcrypt]][Bcrypt-url]
 * [![Tailwind][Tailwind.css]][Tailwind-url]
 * [![Shadcn][Shadcn]][Shadcn-url]
+* ![PWA][PWA]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -82,7 +86,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-Create an .env file in your **root** directory and it should contain:
+1. Create an .env file in your **root** directory and it should contain:
 ```sh
 DATABASE_URL="postgresql://postgres:USER@HOST:PORT/DATABASE?schema=YOUR_SCHEMA_NAME" #postgres
 NEXTAUTH_SECRET="NEXTAUTH_SECRET" #can be anything
@@ -90,11 +94,12 @@ NEXTAUTH_SECRET="NEXTAUTH_SECRET" #can be anything
 
 *This Project was made with postgres as the database, [configure Prisma](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project) if you plan to use a different database*
 
-Install Node Package Manager or npm if you don't have it on your device.
+2. Install Node Package Manager or npm if you don't have it on your device.
 * npm
   ```sh
   npm install npm@latest -g
   ```
+
 
 
 ### Installation
@@ -114,6 +119,16 @@ Install Node Package Manager or npm if you don't have it on your device.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
+
+## Deploying
+
+I have deployed this website on [Liara](https://liara.ir/), however this project can be deployed on Vercel or other services that you prefer.
+
+**CAUTIONS**
+*You may want to use gitignore to ignore api-doc directory as it contains SwaggerUI and exposes documation of your API routes. (also I had error in Liara for uploading this directory)*
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
@@ -205,3 +220,5 @@ Project Link: https://github.com/Aking16/z-platform
 
 [Bcrypt]: https://img.shields.io/badge/Bcrypt-CA4245?style=for-the-badge&logo=react&logoColor=white
 [Bcrypt-url]: https://www.npmjs.com/package/bcrypt
+
+[PWA]: https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white
