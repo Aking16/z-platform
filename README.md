@@ -126,6 +126,7 @@ NEXTAUTH_SECRET="NEXTAUTH_SECRET" #can be anything
 I have deployed this website on [Liara](https://liara.ir/), however this project can be deployed on Vercel or other services that you prefer.
 
 **CAUTIONS**
+
 *You may want to use gitignore to ignore api-doc directory as it contains SwaggerUI and exposes documation of your API routes. (also I had error in Liara for uploading this directory)*
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
