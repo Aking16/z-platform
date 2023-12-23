@@ -20,7 +20,7 @@
     <br />
     <br />
     <a href="https://github.com/Aking16/z-platform/issues">Report Bug</a> •    
-    <a href="https://z-platform.liara.run/">Demo</a>    
+    <a href="https://z-platform-sable.vercel.app/">Demo</a>    
   </p>
 </div>
 
@@ -42,7 +42,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#deploying">Deploying</a></li>
+    <li><a href="#deployment">Deployment</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -121,13 +121,13 @@ NEXTAUTH_SECRET="NEXTAUTH_SECRET" #can be anything
 
 
 
-## Deploying
+## Deployment
 
-I have deployed this website on [Liara](https://liara.ir/), however this project can be deployed on Vercel or other services that you prefer.
+I have deployed this project on [Vercel](https://vercel.com/), however this project can be deployed on any other hosting services that you prefer.
 
 ***CAUTIONS***
 <br />
-You may want to use `.gitignore` to ignore api-doc directory as it contains SwaggerUI and exposes documation of your API routes. (also I had error in Liara for uploading this directory)
+If you wish to deploy this project on Vercel, please use the [`vercel`](https://github.com/Aking16/z-platform/tree/vercel) branch as it's deployment ready for Vercel.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
