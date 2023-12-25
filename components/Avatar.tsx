@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image";
-import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 
 import {
@@ -16,6 +15,7 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import useUser from "@/hooks/useUser";
 import { Edit } from "lucide-react";
 import { ProfileImageForm } from "@/components/forms/ProfileImageForm";
+import { Logo } from "@/components/layout/Logo";
 
 interface AvatarProps {
     userId: string;
@@ -26,7 +26,6 @@ interface AvatarProps {
 }
 
 const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder, src, editable }) => {
-    const { theme } = useTheme();
     const router = useRouter();
     const { data: fetchedUser } = useUser(userId);
     const { data: currentUser } = useCurrentUser();
@@ -45,7 +44,7 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder, src, editab
         } else if (fetchedUser?.profileImage) {
             source = fetchedUser?.profileImage;
         } else {
-            source = '/avatars/placeholder.png'
+            source = '/placeholder/avatar-placeholder.png'
         }
 
         return source;
@@ -75,11 +74,7 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder, src, editab
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="flex justify-center items-center !mt-[-1rem]">
-                            {theme === "light" ?
-                                <Image priority src={"/z-light.svg"} alt="Z logo" width={40} height={40} className="ms-2 hover:bg-primary-foreground/10 rounded-full mt-3" />
-                                :
-                                <Image priority src={"/z-dark.svg"} alt="Z logo" width={40} height={40} className="ms-2 hover:bg-primary-foreground/10 rounded-full mt-3" />
-                            }
+                            <Logo size={40}/>
                         </DialogTitle>
                     </DialogHeader>
                     <ScrollArea className="h-[24rem] md:h-full">

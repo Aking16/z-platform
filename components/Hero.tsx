@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image";
-import { useTheme } from "next-themes";
 
 import {
     Dialog,
@@ -15,6 +14,7 @@ import useUser from "@/hooks/useUser";
 import { Edit } from "lucide-react";
 import { CoverImageForm } from "@/components/forms/CoverImageForm";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import Logo from "@/components/layout/Logo";
 
 interface HeroProps {
     userId: string;
@@ -23,7 +23,6 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ userId, src, editable }) => {
-    const { theme } = useTheme();
     const { data: fetchedUser } = useUser(userId);
     const { data: currentUser } = useCurrentUser();
 
@@ -34,6 +33,8 @@ const Hero: React.FC<HeroProps> = ({ userId, src, editable }) => {
             source = src;
         } else if (fetchedUser?.coverImage) {
             source = fetchedUser?.coverImage;
+        } else {
+            source = '/placeholder/cover-placeholder.png'
         }
         return source;
     }
@@ -42,13 +43,11 @@ const Hero: React.FC<HeroProps> = ({ userId, src, editable }) => {
         <Dialog>
             <DialogTrigger asChild>
                 <div className={`${editable && "cursor-pointer"} w-full h-full group relative`}>
-                    {fetchedUser.coverImage &&
-                        <Image
-                            fill
-                            alt="Cover Image"
-                            src={imageSrc()}
-                            style={{ objectFit: 'contain' }} />
-                    }
+                    <Image
+                        fill
+                        alt="Cover Image"
+                        src={imageSrc()}
+                        style={{ objectFit: 'contain' }} />
 
                     {editable && currentUser?.id === userId &&
                         <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-primary/60 rounded-full p-2 invisible group-hover:visible">
@@ -61,11 +60,7 @@ const Hero: React.FC<HeroProps> = ({ userId, src, editable }) => {
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="flex justify-center items-center !mt-[-1rem]">
-                            {theme === "light" ?
-                                <Image priority src={"/z-light.svg"} alt="Z logo" width={40} height={40} className="ms-2 hover:bg-primary-foreground/10 rounded-full mt-3" />
-                                :
-                                <Image priority src={"/z-dark.svg"} alt="Z logo" width={40} height={40} className="ms-2 hover:bg-primary-foreground/10 rounded-full mt-3" />
-                            }
+                            <Logo size={40} />
                         </DialogTitle>
                     </DialogHeader>
                     <ScrollArea className="h-[24rem] md:h-full">

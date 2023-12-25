@@ -2,10 +2,10 @@ import useCurrentUser from '@/hooks/useCurrentUser';
 import useNotifications from '@/hooks/useNotifications';
 import axios from 'axios';
 import { Loader2, X } from 'lucide-react';
-import Image from 'next/image';
 import { useEffect } from 'react';
 import { Button } from './ui/button';
 import { useTheme } from 'next-themes';
+import Logo from '@/components/layout/Logo';
 
 const NotificationFeed = () => {
     const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
@@ -42,14 +42,8 @@ const NotificationFeed = () => {
         <div className="flex flex-col">
             {fetchedNotifications.map((notification: Record<string, any>) => (
                 <div key={notification.id} className="flex flex-row items-center p-6 gap-4 border-b-[1px] border-border">
-                    {theme === "dark" ?
-                        <Image priority src={"/z-light.svg"} alt="Z logo" width={35} height={35} />
-                        :
-                        <Image priority src={"/z-dark.svg"} alt="Z logo" width={35} height={35} />
-                    }
-                    <p>
-                        {notification.body}
-                    </p>
+                    <Logo size={35} />
+                    <p> {notification.body} </p>
                     <Button
                         variant="link"
                         size="sm"
