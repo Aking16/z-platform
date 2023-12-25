@@ -90,6 +90,7 @@ To get a local copy up and running follow these simple example steps.
 ```sh
 DATABASE_URL="postgresql://postgres:USER@HOST:PORT/DATABASE?schema=YOUR_SCHEMA_NAME" #postgres
 NEXTAUTH_SECRET="NEXTAUTH_SECRET" #can be anything
+NEXTAUTH_URL="http://192.168.#.#:3000" #should be replaced with your website domain when shipped to production
 ```
 
 *This Project was made with postgres as the database, [configure Prisma](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project) if you plan to use a different database*
