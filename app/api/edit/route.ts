@@ -2,6 +2,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prismadb from "@/lib/prismadb";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import { json } from "stream/consumers";
 
 /**
  * @swagger
@@ -44,16 +45,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function PATCH(req: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
-        const formData = await req.formData();
-
-        let urlPI = await req.url;
-        let urlCI = await req.url;
-        urlPI = urlPI.split('api')[0] + "upload/profile-images/"
-        urlCI = urlCI.split('api')[0] + "upload/cover-images/"
-
-        const name = formData.get("name")?.toString();
-        const username = formData.get("username")?.toString();
-        const bio = formData.get("bio")?.toString();
+        const values = await req.json();
 
         if (!session?.user?.email) {
             return new NextResponse("Unauthorized", { status: 401 })
@@ -74,9 +66,7 @@ export async function PATCH(req: NextRequest) {
                 id: currentUser.id
             },
             data: {
-                name,
-                username,
-                bio,
+                ...values
             }
         })
 

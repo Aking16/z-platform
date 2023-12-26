@@ -1,6 +1,6 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import {
@@ -31,21 +31,22 @@ interface HamBurgerMenuProps {
 
 const HamBurgerMenu: React.FC<HamBurgerMenuProps> = ({ routes }) => {
     const { data: currentUser } = useCurrentUser();
+    const [ open, setOpen ] = useState(false);
 
     return (
-        <Sheet>
+        <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger className="flex fixed top-1 right-2 z-50 md:hidden" asChild>
                 <Button variant="secondary" >
                     <Menu size={24} />
                 </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="bg-primary px-0">
+        <SheetContent side="left" className="bg-primary px-0">
                 <SheetHeader className="px-4">
                     <MenuUserBio userId={currentUser?.id} />
                 </SheetHeader>
                 <div className="flex flex-col mt-4">
                     {routes.map((route) => (
-                        <Link href={route.href} key={route.label}>
+                        <Link href={route.href} key={route.label} onClick={() => setOpen(false)}>
                             <button className="flex w-full px-4 py-4 text-xl font-bold relative hover:bg-primary-foreground/10">
                                 {route.alert && <Dot size={70} className="absolute -top-5 -left-4 text-secondary" />}
                                 {route.icon}

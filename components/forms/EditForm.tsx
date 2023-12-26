@@ -34,9 +34,7 @@ const FormSchema = z.object({
     }),
     bio: z.string({
         required_error: "Please enter your bio!"
-    }),
-    profileImage: z.any(),
-    coverImage: z.any()
+    })
 })
 
 export function EditForm({ userId }: { userId: string }) {
