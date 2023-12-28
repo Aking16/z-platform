@@ -34,27 +34,12 @@ import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function POST(request: NextRequest) {
     try {
-        const session = await getServerSession(authOptions)
-        const { post } = await request.json();
-
-        if (!session?.user?.email) {
-            return new NextResponse("Not signed in", { status: 401 })
-        }
-
-        const currentUser = await prismadb.user.findUnique({
-            where: {
-                email: session.user.email
-            }
-        })
-
-        if (!currentUser?.id) {
-            return new NextResponse("Missing Info", { status: 400 })
-        }
+        const { body, userId } = await request.json();
 
         const createdPost = await prismadb.post.create({
             data: {
-                body: post,
-                userId: currentUser.id
+                body,
+                userId
             }
         })
 

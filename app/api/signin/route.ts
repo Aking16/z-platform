@@ -2,7 +2,9 @@ import bcrypt from "bcrypt"
 import prismadb from "@/lib/prismadb";
 import { NextRequest, NextResponse } from "next/server";
 
+
 export async function POST(request: NextRequest) {
+    try {
         const { email, password } = await request.json();
 
         if (!email || !password) {
@@ -29,4 +31,8 @@ export async function POST(request: NextRequest) {
         }
 
         return NextResponse.json(user);
+    } catch (error) {
+        console.log(error);
+        return new NextResponse("Internal Error", { status: 500 })
+    }
 }
