@@ -20,6 +20,12 @@ const nextConfig = {
                 port: '3000',
                 pathname: '/upload/**',
             },
+            {
+                protocol: 'http',
+                hostname: process.env.HOST_URL,
+                port: process.env.PORT,
+                pathname: '/upload/**',
+            },
         ],
     },
     output: "standalone"
