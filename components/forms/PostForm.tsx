@@ -9,20 +9,17 @@ import * as z from "zod"
 import Avatar from "@/components/Avatar"
 import { Button } from "@/components/ui/button"
 import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
+import {
     Form,
     FormControl,
     FormField,
     FormItem,
     FormMessage
 } from "@/components/ui/form"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Textarea } from "@/components/ui/textarea"
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
@@ -32,11 +29,11 @@ import usePost from "@/hooks/usePost"
 import usePosts from "@/hooks/usePosts"
 
 import { Loader2, Smile } from "lucide-react"
-import toast from 'react-hot-toast'
 import { useTheme } from "next-themes"
+import toast from 'react-hot-toast'
 
 const FormSchema = z.object({
-    post: z.string({
+    body: z.string({
         required_error: "Please write your post!"
     })
 })
@@ -65,7 +62,12 @@ export function PostForm({ placeHolder, isComment, postId }: PostFormProps) {
 
         const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts'
 
-        axios.post(url, values).then(() => {
+        const data = {
+            body: values.body,
+            userId: currentUser.id
+        };
+
+        axios.post(url, data).then(() => {
             toast.success("Post Created!", { style: { color: "#fff", background: "#000" } });
             mutatePosts();
             mutatePost();
@@ -79,7 +81,7 @@ export function PostForm({ placeHolder, isComment, postId }: PostFormProps) {
         const newSelectedEmoji = (selectedEmoji || '') + emojiNative;
 
         setSelectedEmoji(newSelectedEmoji);
-        form.setValue('post', newSelectedEmoji);
+        form.setValue('body', newSelectedEmoji);
     };
 
     return (
@@ -93,7 +95,7 @@ export function PostForm({ placeHolder, isComment, postId }: PostFormProps) {
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField
                         control={form.control}
-                        name="post"
+                        name="body"
                         render={({ field }) => (
                             <FormItem className="px-4 mt-5">
                                 <FormControl>
@@ -124,7 +126,7 @@ export function PostForm({ placeHolder, isComment, postId }: PostFormProps) {
                                 <Smile className="text-secondary" />
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
-                                <Picker data={data} onEmojiSelect={handleEmojiSelect} theme={theme}/>
+                                <Picker data={data} onEmojiSelect={handleEmojiSelect} theme={theme} />
                             </DropdownMenuContent>
                         </DropdownMenu>
                         <Button type="submit" size="sm" className="px-4" disabled={loading}>Post</Button>

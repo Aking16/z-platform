@@ -1,7 +1,5 @@
 import prismadb from '@/lib/prismadb';
-import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
-import { authOptions } from '../auth/[...nextauth]/route';
 
 /**
  * @swagger
@@ -22,23 +20,16 @@ import { authOptions } from '../auth/[...nextauth]/route';
  *         description: Returns current logged in user
  */
 
-export async function GET(request: NextRequest) {
-  try {
-    const session = await getServerSession(authOptions)
-
-    if (!session?.user?.email) {
-      return new NextResponse("Unauthorized", { status: 401 })
-    }
+export async function POST(request: NextRequest, response: NextResponse) {
+ 
+    const { userId } = await request.json();
 
     const currentUser = await prismadb.user.findUnique({
       where: {
-        email: session.user.email
+        id: userId
       }
     })
 
     return NextResponse.json(currentUser);
-  } catch (error) {
-    console.log(error);
-    return new NextResponse("Internal Error", { status: 500 })
-  }
+  
 }
