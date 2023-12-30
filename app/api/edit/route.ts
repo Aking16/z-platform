@@ -1,6 +1,4 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prismadb from "@/lib/prismadb";
-import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
@@ -41,27 +39,17 @@ import { NextRequest, NextResponse } from "next/server";
  *         description: Returns updated user
  */
 
-export async function PATCH(req: NextRequest) {
+export async function PATCH(request: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        const formData = await req.formData();
+        const {userId, name, username, bio} = await request.json();
 
-        let urlPI = await req.url;
-        let urlCI = await req.url;
-        urlPI = urlPI.split('api')[0] + "upload/profile-images/"
-        urlCI = urlCI.split('api')[0] + "upload/cover-images/"
-
-        const name = formData.get("name")?.toString();
-        const username = formData.get("username")?.toString();
-        const bio = formData.get("bio")?.toString();
-
-        if (!session?.user?.email) {
+        if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 })
         }
 
         const currentUser = await prismadb.user.findUnique({
             where: {
-                email: session.user.email
+                id: userId
             }
         })
 

@@ -21,15 +21,29 @@ import { NextRequest, NextResponse } from "next/server";
  *         description: Returns users
  */
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
     try {
-        const users = await prismadb.user.findMany({
-            orderBy: {
-                createdAt: 'desc'
+        const {userId} = await request.json();
+
+        if (!userId || typeof userId !== 'string') {
+            return new NextResponse("Invalid ID", { status: 400 })
+        }
+
+        const user = await prismadb.user.findUnique({
+            where: {
+                id: userId
+            }
+        })
+        
+        const followersCount = await prismadb.user.count({
+            where: {
+                followingIds: {
+                    has: userId
+                }
             }
         })
 
-        return NextResponse.json(users);
+        return NextResponse.json({...user, followersCount});
     } catch (error) {
         console.log(error);
         return new NextResponse("Internal Error", { status: 500 })

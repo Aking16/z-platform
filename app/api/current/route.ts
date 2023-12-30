@@ -20,7 +20,7 @@ import { NextRequest, NextResponse } from 'next/server';
  *         description: Returns current logged in user
  */
 
-export async function POST(request: NextRequest, response: NextResponse) {
+export async function POST(request: NextRequest) {
  
     const { userId } = await request.json();
 
