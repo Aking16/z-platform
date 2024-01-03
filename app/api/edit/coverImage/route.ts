@@ -1,10 +1,8 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import prismadb from "@/lib/prismadb";
 import { existsSync } from "fs";
 import fs from "fs/promises";
-import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
-import prismadb from "@/lib/prismadb";
 
 /**
  * @swagger
@@ -46,27 +44,27 @@ import prismadb from "@/lib/prismadb";
 
 export async function PATCH(req: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
         const formData = await req.formData();
-
-        const urlCI = await req.url.split('api')[0] + "upload/cover-images/"
-
+        
+        const urlPI = process.env.NEXTAUTH_URL + "/upload/cover-images/"
+        
         const coverImage = formData.get("coverImage");
-
+        const userId = formData.get("userId");
+        
         if (!coverImage) {
-            return NextResponse.json("File Not Found", { status: 400 });
+            return NextResponse.json("File Not Found", { status: 404 });
         }
 
-        if (!session?.user?.email) {
-            return new NextResponse("Unauthorized", { status: 401 })
+        if (!userId) {
+            return new NextResponse("Unauthorized", { status: 401 });
         }
-
+        
         const currentUser = await prismadb.user.findUnique({
             where: {
-                email: session.user.email
+                id: userId as string
             }
         })
-
+        
         if (!currentUser?.id) {
             return new NextResponse("Missing Info", { status: 400 })
         }
@@ -75,15 +73,14 @@ export async function PATCH(req: NextRequest) {
 
         const coverImageDir = path.join(process.cwd(), "public/upload/cover-images");
 
-        const coverImageFileArrayBuffer = await coverImageFile.arrayBuffer();
+        const coverImageArrayBuffer = await coverImageFile.arrayBuffer();
 
-        if (!existsSync(coverImageDir)) {
+        if (!existsSync(coverImageDir) ) {
             fs.mkdir(coverImageDir, { recursive: true });
         }
-
         await fs.writeFile(
             path.join(coverImageDir, coverImageFile.name),
-            Buffer.from(coverImageFileArrayBuffer),
+            Buffer.from(coverImageArrayBuffer),
         );
 
         const updatedUser = await prismadb.user.update({
@@ -91,7 +88,7 @@ export async function PATCH(req: NextRequest) {
                 id: currentUser.id
             },
             data: {
-                coverImage: urlCI + coverImageFile.name
+                coverImage: urlPI + coverImageFile.name,
             }
         })
 

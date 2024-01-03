@@ -46,27 +46,27 @@ import path from "path";
 
 export async function PATCH(req: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
         const formData = await req.formData();
-
-        const urlPI = await req.url.split('api')[0] + "upload/profile-images/"
-
+        
+        const urlPI = process.env.NEXTAUTH_URL + "/upload/profile-images/"
+        
         const profileImage = formData.get("profileImage");
-
+        const userId = formData.get("userId");
+        
         if (!profileImage) {
             return NextResponse.json("File Not Found", { status: 404 });
         }
 
-        if (!session?.user?.email) {
-            return new NextResponse("Unauthorized", { status: 401 })
+        if (!userId) {
+            return new NextResponse("Unauthorized", { status: 401 });
         }
-
+        
         const currentUser = await prismadb.user.findUnique({
             where: {
-                email: session.user.email
+                id: userId as string
             }
         })
-
+        
         if (!currentUser?.id) {
             return new NextResponse("Missing Info", { status: 400 })
         }
