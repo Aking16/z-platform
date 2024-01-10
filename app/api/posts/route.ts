@@ -73,12 +73,26 @@ export async function GET(request: NextRequest) {
     try {
         const { searchParams } = new URL(request.url);
         const userId = searchParams.get("userId");
+        const postId = searchParams.get("postId");
         let posts;
 
         if (userId) {
             posts = await prismadb.post.findMany({
                 where: {
                     userId
+                },
+                include: {
+                    user: true,
+                    comments: true
+                },
+                orderBy: {
+                    createdAt: 'desc'
+                },
+            });
+        } else if (postId) {
+            posts = await prismadb.post.findMany({
+                where: {
+                    id: postId
                 },
                 include: {
                     user: true,
