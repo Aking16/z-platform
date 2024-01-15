@@ -35,38 +35,25 @@ import prismadb from "@/lib/prismadb";
 
 export async function POST(request: NextRequest) {
     try {
-        const { post } = await request.json();
-        const { searchParams } = new URL(request.url);
-        const postId = searchParams.get("postId");
-        const session = await getServerSession(authOptions)
+        const { post, userId, postId } = await request.json();
 
-        if (!session?.user?.email) {
-            return new NextResponse("Unauthorized", { status: 401 })
-        }
-
-        if (!postId || typeof postId !== 'string') {
+        if (!userId) {
             return new NextResponse("Invalid ID", { status: 400 })
         }
 
-        const currentUser = await prismadb.user.findUnique({
-            where: {
-                email: session.user.email
-            }
-        })
-
-        if (!currentUser?.id) {
+        if (!postId) {
             return new NextResponse("Invalid ID", { status: 400 })
         }
 
         const comment = await prismadb.comment.create({
             data: {
                 body: post,
-                userId: currentUser.id,
+                userId,
                 postId,
             }
         })
 
-        try {
+        /*try {
             const post = await prismadb.post.findUnique({
                 where: {
                     id: postId
@@ -95,7 +82,7 @@ export async function POST(request: NextRequest) {
             }
         } catch (error) {
             console.log(error);
-        }
+        }*/
 
         return NextResponse.json(comment);
     } catch (error) {
