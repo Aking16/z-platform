@@ -34,66 +34,53 @@ import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function POST(request: NextRequest) {
     try {
-        const { userId } = await request.json();
+        const { followerId, followId } = await request.json();
 
-        const session = await getServerSession(authOptions)
-
-        if (!session?.user?.email) {
-            return new NextResponse("Unauthorized", { status: 401 })
-        }
-
-        if (!userId || typeof userId !== 'string') {
+        if (!followerId || typeof followerId !== 'string') {
             return new NextResponse("Invalid ID", { status: 400 })
         }
-
-        const currentUser = await prismadb.user.findUnique({
-            where: {
-                email: session.user.email
-            }
-        })
+        if (!followId || typeof followId !== 'string') {
+            return new NextResponse("Invalid ID", { status: 400 })
+        }
 
         const user = await prismadb.user.findUnique({
             where: {
-                id: userId
+                id: followId
             }
         })
 
-        if (!currentUser?.id) {
-            return new NextResponse("Invalid ID", { status: 400 })
-        }
-
         let updatedFollowingIds = [...(user?.followingIds || [])];
 
-        updatedFollowingIds.push(userId);
+        updatedFollowingIds.push(followId);
 
         const updatedUser = await prismadb.user.update({
             where: {
-                id: currentUser.id
+                id: followerId
             },
             data: {
                 followingIds: updatedFollowingIds
             }
         })
 
-        try {
-            await prismadb.notification.create({
-                data: {
-                    body: `${currentUser.name} followed you!`,
-                    userId
-                }
-            })
+        // try {
+        //     await prismadb.notification.create({
+        //         data: {
+        //             body: `${currentUser.name} followed you!`,
+        //             userId
+        //         }
+        //     })
 
-            await prismadb.user.update({
-                where: {
-                    id: userId
-                },
-                data: {
-                    hasNotficiation: true
-                }
-            })
-        } catch (error) {
-            console.log(error);
-        }
+        //     await prismadb.user.update({
+        //         where: {
+        //             id: userId
+        //         },
+        //         data: {
+        //             hasNotficiation: true
+        //         }
+        //     })
+        // } catch (error) {
+        //     console.log(error);
+        // }
 
         return NextResponse.json(updatedUser);
     } catch (error) {
@@ -133,67 +120,54 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
     try {
-        const { userId } = await request.json();
+        const { followerId, followId } = await request.json();
 
-        const session = await getServerSession(authOptions)
-
-        if (!session?.user?.email) {
-            return new NextResponse("Unauthorized", { status: 401 })
+        if (!followerId || typeof followerId !== 'string') {
+            return new NextResponse("Invalid ID", { status: 400 })
         }
-
-        if (!userId) {
-            return new NextResponse("Unauthorized", { status: 401 })
+        if (!followId || typeof followId !== 'string') {
+            return new NextResponse("Invalid ID", { status: 400 })
         }
-
-        const currentUser = await prismadb.user.findUnique({
-            where: {
-                email: session.user.email
-            }
-        })
 
         const user = await prismadb.user.findUnique({
             where: {
-                id: userId
+                id: followId
             }
         })
 
-
-        if (!currentUser?.id) {
-            return new NextResponse("Missing Info", { status: 400 })
-        }
-
         let updatedFollowingIds = [...(user?.followingIds || [])];
 
-        updatedFollowingIds.filter((followingId) => followingId !== userId);
+        updatedFollowingIds.filter((followingId) => followingId !== followId);
+
 
         const updatedUser = await prismadb.user.update({
             where: {
-                id: currentUser.id
+                id: followerId
             },
             data: {
                 followingIds: updatedFollowingIds
             }
         })
 
-        try {
-            await prismadb.notification.create({
-                data: {
-                    body: `${currentUser.name} unfollowed you!`,
-                    userId
-                }
-            })
+        // try {
+        //     await prismadb.notification.create({
+        //         data: {
+        //             body: `${currentUser.name} unfollowed you!`,
+        //             userId
+        //         }
+        //     })
 
-            await prismadb.user.update({
-                where: {
-                    id: userId
-                },
-                data: {
-                    hasNotficiation: true
-                }
-            })
-        } catch (error) {
-            console.log(error);
-        }
+        //     await prismadb.user.update({
+        //         where: {
+        //             id: userId
+        //         },
+        //         data: {
+        //             hasNotficiation: true
+        //         }
+        //     })
+        // } catch (error) {
+        //     console.log(error);
+        // }
 
         return NextResponse.json(updatedUser);
     } catch (error) {
