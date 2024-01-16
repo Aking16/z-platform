@@ -1,7 +1,5 @@
-import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../auth/[...nextauth]/route";
 import prismadb from "@/lib/prismadb";
+import { NextRequest, NextResponse } from "next/server";
 
 
 /**
@@ -85,6 +83,34 @@ export async function POST(request: NextRequest) {
         }*/
 
         return NextResponse.json(comment);
+    } catch (error) {
+        console.log(error);
+        return new NextResponse("Internal Error", { status: 500 })
+    }
+}
+
+export async function GET(request: NextRequest) {
+    try {
+        const { searchParams } = new URL(request.url);
+        const postId = searchParams.get("postId");
+
+        if (!postId) {
+            return new NextResponse("Invalid ID", { status: 400 })
+        }
+
+        const comments = await prismadb.comment.findMany({
+            where: {
+                postId
+            },
+            include: {
+                user: true,
+            },
+            orderBy: {
+                createdAt: 'desc'
+            },
+        });
+
+        return NextResponse.json(comments);
     } catch (error) {
         console.log(error);
         return new NextResponse("Internal Error", { status: 500 })
