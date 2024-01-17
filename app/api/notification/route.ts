@@ -27,9 +27,10 @@ import { NextRequest, NextResponse } from "next/server";
  *         description: Returns fetched notifications
  */
 
-export async function GET(request: NextRequest, { params }: { params: { userId: string } }) {
+export async function GET(request: NextRequest) {
     try {
-        const userId = params.userId;
+        const { searchParams } = new URL(request.url);
+        const userId = searchParams.get("userId");
 
         if (!userId || typeof userId !== 'string') {
             return new NextResponse("Invalid ID", { status: 400 })

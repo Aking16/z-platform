@@ -62,25 +62,25 @@ export async function POST(request: NextRequest) {
             }
         })
 
-        // try {
-        //     await prismadb.notification.create({
-        //         data: {
-        //             body: `${currentUser.name} followed you!`,
-        //             userId
-        //         }
-        //     })
+        try {
+            await prismadb.notification.create({
+                data: {
+                    body: `${updatedUser?.name} followed you!`,
+                    userId: followId
+                }
+            })
 
-        //     await prismadb.user.update({
-        //         where: {
-        //             id: userId
-        //         },
-        //         data: {
-        //             hasNotficiation: true
-        //         }
-        //     })
-        // } catch (error) {
-        //     console.log(error);
-        // }
+            await prismadb.user.update({
+                where: {
+                    id: followId
+                },
+                data: {
+                    hasNotficiation: true
+                }
+            })
+        } catch (error) {
+            console.log(error);
+        }
 
         return NextResponse.json(updatedUser);
     } catch (error) {
@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
  *         description: Returns updated user
  */
 
-export async function DELETE(request: NextRequest) {
+export async function PATCH(request: NextRequest) {
     try {
         const { followerId, followId } = await request.json();
 
