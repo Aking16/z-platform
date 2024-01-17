@@ -30,6 +30,14 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    return NextResponse.json(currentUser);
+    const followersCount = await prismadb.user.count({
+      where: {
+          followingIds: {
+              has: userId
+          }
+      }
+  })
+
+    return NextResponse.json({...currentUser, followersCount});
   
 }
