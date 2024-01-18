@@ -1,9 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
-import { Toaster } from 'react-hot-toast';
-import SessionContext from '@/Context/session-context';
 import '@/app/globals.css';
-import { ThemeProvider } from '@/Provider/ThemeProvider';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -43,15 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-primary text-primary-foreground`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem>
-          <SessionContext>
-            {children}
-            <Toaster />
-          </SessionContext>
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   )
